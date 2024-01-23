@@ -3,8 +3,19 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 export default function QrScanner() {
-  const [QRresult, setQRresult] = useState(null);
+  const [QRresult, setQRresult] = useState<Student | null>(null);
   let scanner: Html5QrcodeScanner | null = null;
+  const getStudentById = "http://localhost:8080/student/student/";
+ 
+
+  let testStudent : Student = {
+    fullName : ''
+  }
+
+  interface Student {
+    fullName : string;
+  }
+
 
   useEffect(() => {
     if (!scanner) {
@@ -22,14 +33,17 @@ export default function QrScanner() {
       scanner.render(success, error);
     }
 
-    function success(result: any) {
-      setQRresult(result);
+    function success(result : any) {
+      axios.get(getStudentById + result).then((response) => {
+          console.log(response);
+      });
 
-      /* Lättare att testa om denna inte ligger här nu
+      
+      /*
         if (scanner) {
           scanner.clear();
         }
-      */
+      */  
     }
 
     function error(err: any) {
@@ -37,15 +51,10 @@ export default function QrScanner() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("Värdet ändrades!");
-    console.log(QRresult + " <<");
-  }, [QRresult]);
 
   return (
     <>
       <div className="qr-container">
-        <h1>{QRresult}</h1>
         <div id="reader"></div>
       </div>
     </>

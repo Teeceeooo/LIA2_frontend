@@ -1,25 +1,37 @@
-/*
+
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const baseURL = "https://localhost:8080/students";
+const baseURL = "http://localhost:8080/student/getall";
+let myArray:any;
 
 export default function Testing() {
-  interface Post {
+  interface Student {
     fullName: string;
   }
 
-  const [post, setPost] = useState<Post[] | null>(null);
+  const [students, setStudents] = useState<Student[] | null>(null);
 
   useEffect(() => {
     axios.get(baseURL).then((response) => {
-      setPost(response.data);
+      setStudents(response.data);
     });
   }, []);
 
-  if (!post) return null;
+  if (!students) return null;
 
-  return <h1>{post[0].fullName}</h1>;
+  const allStudents = students.map((Student:any, index:any) => (
+    <li key={index}>{Student.fullName}</li>
+  ));
+
+  return (
+    <div className="student-container">
+    <h2>Studenter</h2>
+    <ul>
+        {allStudents}
+    </ul>
+    </div>
+  );
 }
-*/
+
