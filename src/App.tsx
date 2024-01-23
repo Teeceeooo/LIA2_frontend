@@ -9,7 +9,6 @@ function App() {
     <div className="App">
       <PersistentDrawerLeft />
       <QrScanner />
-      <Footer />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function QrScanner() {
@@ -35,11 +35,12 @@ export default function QrScanner() {
 
     function success(result : any) {
       axios.get(getStudentById + result).then((response) => {
-          console.log(response);
+        setQRresult(response.data as Student);
+          //setQRresult(response as Student);
       });
 
       
-      /*
+      /* Lättare utan denna under utveckling
         if (scanner) {
           scanner.clear();
         }
@@ -55,7 +56,10 @@ export default function QrScanner() {
   return (
     <>
       <div className="qr-container">
-        <div id="reader"></div>
+        <div id="reader">
+        </div>
+        {QRresult && QRresult.fullName}
+
       </div>
     </>
   );
