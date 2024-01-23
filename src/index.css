@@ -25,37 +25,3 @@ footer p a {
   text-decoration: none;
   color:white;
 }
-
-/* CSS FÖR HTML5 QR-SCANNER */
-
-.qr-container {
-  width: 80%;
-  height: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-  
-}
-
-#reader {
-  border:1px #1976d2 solid;
-  padding:15px;
-}
-
-#html5-qrcode-button-camera-start {
-  padding:20px;
-  border:none;
-  color:white;
-  background-color:#1976d2;
-  font-size:1.2rem;
-  margin-bottom:25px;
-}
-
-
-#html5-qrcode-button-camera-stop {
-  padding:20px;
-  border:none;
-  color:white;
-  background-color:#1976d2;
-  font-size:1.2rem;
-}
