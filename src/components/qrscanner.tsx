@@ -1,5 +1,5 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 export default function QrScanner() {
@@ -40,7 +40,7 @@ export default function QrScanner() {
       });
 
       
-      /* Lättare utan denna under utveckling
+      /*
         if (scanner) {
           scanner.clear();
         }
