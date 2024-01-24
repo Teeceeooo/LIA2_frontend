@@ -1,13 +1,42 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.qr-container {
+  width: 80%;
+  height: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+/* CSS FÖR HTML5 QR-SCANNER */
+
+.qr-container {
+  width: 80%;
+  height: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  
 }
+
+#reader {
+  border:1px #1976d2 solid;
+  padding:15px;
+}
+
+#html5-qrcode-button-camera-start {
+  padding:20px;
+  border:none;
+  color:white;
+  background-color:#1976d2;
+  font-size:1.2rem;
+  margin-bottom:25px;
+}
+
+
+#html5-qrcode-button-camera-stop {
+  padding:20px;
+  border:none;
+  color:white;
+  background-color:#1976d2;
+  font-size:1.2rem;
+}
+
