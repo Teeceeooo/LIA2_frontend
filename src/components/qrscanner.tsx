@@ -32,6 +32,9 @@ export default function QrScanner() {
     function success(result : any) {
       axios.get(getStudentById + result).then((response) => {
         setQRresult(response.data as Student);
+
+=======
+
       });
 
       
@@ -52,9 +55,15 @@ export default function QrScanner() {
     <>
       <div className="qr-container">
         <div id="reader">
+
+        </div>
+        {QRresult && QRresult.fullName}
+
+
                   </div>
         {QRresult && QRresult.fullName}
         
+
       </div>
     </>
   );
