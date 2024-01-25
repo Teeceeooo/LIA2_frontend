@@ -5,7 +5,47 @@
 }
 
 
+/* Participant komponent */
+.css-1gcg9uy-MuiPaper-root-MuiCard-root{
+  margin-top:50px;
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+}
 
+.css-h93ljk-MuiTypography-root {
+  text-align:center;
+}
+
+.css-1999db7-MuiCardMedia-root {
+  min-height:250px;
+}
+
+.participant-list {
+  width:100%;
+  border:solid #333 1px;
+  overflow:auto;
+  max-height:100px;
+  border-radius: 5px;
+}
+
+.participant-list li {
+  list-style-type: none;
+  font-family: 'Courier New', Courier, monospace;
+  padding:5px;
+  background-color:white;
+  font-size:1rem;
+  text-align: center;
+}
+
+.participant-list li:nth-child(odd) {
+  background-color:whitesmoke;
+}
+
+/* Participant komponent  */
+
+
+/* Footer */
 footer {
   background-color:#1976d2;
   position: absolute;
@@ -25,7 +65,6 @@ footer p a {
   text-decoration: none;
   color:white;
 }
-
 
 /* CSS FÖR HTML5 QR-SCANNER */
 
@@ -51,7 +90,6 @@ footer p a {
   font-size:1.2rem;
   margin-bottom:25px;
 }
-
 
 #html5-qrcode-button-camera-stop {
   padding:20px;
