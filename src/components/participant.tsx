@@ -21,6 +21,7 @@ export default function Participant() {
             </Typography>
             <Typography variant="body2" color="text.secondary">
             
+            {/* Loopa ut utifrån objektets items */}
               <ul className="participant-list">
                 <li>Ladda item 1......</li>
                 <li>Ladda item 2......</li>
@@ -31,6 +32,7 @@ export default function Participant() {
             </Typography>
           </CardContent>
           <CardActions>
+          {/* Objektets telefonnummer */}
           <a href="tel:000 000 000"><PhoneAndroidIcon /></a>
           </CardActions>
         </Card>
