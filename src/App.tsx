@@ -16,16 +16,12 @@ function App() {
     <div className="App">
       <PersistentDrawerLeft />
       <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<QrScanner />}>
-        <Route index element={<QrScanner />} />
-      </Route>
-      <Route path="/participant" element={<Participant />}>
-        <Route index element={<Participant />} />
-      </Route>
-    </Routes>
-    <Layout />
-  </BrowserRouter>
+        <Routes>
+        <Route path="/" element={<QrScanner />} />
+        <Route path="/participant/:id" element={<Participant />} />
+        </Routes>
+       <Layout />
+      </BrowserRouter>
       
     </div>
     </>
