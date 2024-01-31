@@ -5,33 +5,96 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import { useLocation, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+
+
+interface Participant {
+  fullName : string,
+  telephoneNumber : string,
+  
+  image : {
+    imageUrl : string
+  },
+  participantItems : [
+      {
+        id : number,
+        description : string
+      }
+  ] 
+    
+  
+ 
+
+}
+
+let userId : number;
+
+
+
 
 export default function Participant() {
+  const [user, setUser] = useState<Participant | null>(null);
+  let { id } = useParams();
+  //const {state} = useLocation();
+
+
+  /* Hämta objektet */
+  useEffect(() => {
+  getParticipant();
+  function getParticipant() {
+    axios.get("http://localhost:9090/api/v1/participants/" + id)
+    .then((response) => {
+      setUser(response.data);
+    }
+    
+  )}
+},[]);
+
+useEffect(() => {
+  if (user) {
+    console.log(user.participantItems[0].description + " <<<<<<<<<<<<<<<<<<")
+    fetchImage();
+  }
+}, [user]);
+
+
+const [profileImage, setProfileImg] = useState<string | undefined>(undefined);
+const fetchImage = async () => {
+  try {
+    const response = await axios.get("http://localhost:9090/api/v1/images/img/" + user?.image.imageUrl, {
+      responseType : 'blob',
+    });
+    const profilePicture = URL.createObjectURL(response.data);
+    setProfileImg(profilePicture);
+  } catch (error) {
+    console.error('Något gick fel: ', error);
+  }
+}
+
     return (
         <Card sx={{ maxWidth: 500 }}>
           <CardMedia
             sx={{ height: 140 }}
-            /* image ska vara satt till inkommande objekts image.. :)  */
-            image='https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=2034&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            image={profileImage}
             title="Profile picture"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Hund Hundsson
+              {user?.fullName}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+           
             
-              <ul className="participant-list">
-                <li>Ladda item 1......</li>
-                <li>Ladda item 2......</li>
-                <li>Ladda item 3......</li>
-                <li>Ladda item 4......</li>
-                <li>Ladda item 5......</li>
-              </ul>
-            </Typography>
+                <ul className='participant-list'>
+                   {user?.participantItems.map(u => (<li key={u.id}>{u.description}</li>))} 
+                </ul>
+           
           </CardContent>
           <CardActions>
-          <a href="tel:000 000 000"><PhoneAndroidIcon /></a>
+          {/* Objektets telefonnummer */}
+          <a href={ 'tel:' +  user?.telephoneNumber}><PhoneAndroidIcon /></a>
           </CardActions>
         </Card>
       );
