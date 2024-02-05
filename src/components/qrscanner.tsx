@@ -6,20 +6,17 @@ import Participant from "./participant";
 import { Switch } from "@mui/material";
 import { Route, useNavigate  } from "react-router-dom";
 
+interface Participant {
+  fullName : string,
+  image : {
+    imageUrl : string
+  }
+}
 
 export default function QrScanner() {
   let scanner: Html5QrcodeScanner | null = null;
   const [QRresult, setQRresult] = useState<Participant | null>(null);
   const navigate = useNavigate();
-
-
-  interface Participant {
-    fullName : string,
-    image : {
-      imageUrl : string
-    }
-  }
- 
 
   useEffect(() => {
     if (!scanner) {
@@ -27,8 +24,8 @@ export default function QrScanner() {
         "reader",
         {
           qrbox: {
-            width: 300,
-            height: 300,
+            width: 500,
+            height: 500,
           },
           fps: 150,
         },
@@ -59,7 +56,7 @@ export default function QrScanner() {
         <div className="qr-container">
           <div id="reader">
           </div>
-          </div>
+        </div>
       </>
     );
 }

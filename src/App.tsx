@@ -5,26 +5,23 @@ import QrScanner from "./components/qrscanner";
 import Participant from "./components/participant";
 import Footer from "./components/footer";
 import Layout from "./components/layout";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { PartyModeOutlined } from "@mui/icons-material";
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <QrScanner />
+  },
+  {
+    path: '/participant/:id',
+    element: <Participant />,
+  },
+]);
 
 function App() {
   return (
-    <>
-
-    <div className="App">
-      <PersistentDrawerLeft />
-      <BrowserRouter>
-        <Routes>
-        <Route path="/" element={<QrScanner />} />
-        <Route path="/participant/:id" element={<Participant />} />
-        </Routes>
-       <Layout />
-      </BrowserRouter>
-      
-    </div>
-    </>
+    <RouterProvider router={router} />
   );
 }
 
