@@ -7,23 +7,24 @@ import Footer from "./components/footer";
 import Layout from "./components/layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PartyModeOutlined } from "@mui/icons-material";
-
+import Createparticipant from "./components/createparticipant";
 
 function App() {
   return (
     <>
-
-    <div className="App">
-      <PersistentDrawerLeft />
-      <BrowserRouter>
-        <Routes>
-        <Route path="/" element={<QrScanner />} />
-        <Route path="/participant/:id" element={<Participant />} />
-        </Routes>
-       <Layout />
-      </BrowserRouter>
-      
-    </div>
+      <div className="App">
+        <PersistentDrawerLeft />
+        {/*<BrowserRouter>
+          <Routes>
+            <Route path="/" element={<QrScanner />} />
+            <Route path="/participant/:id" element={<Participant />} />
+          </Routes>
+          <Layout />
+        </BrowserRouter>*/}
+        <div className="create-participant-container">
+          <Createparticipant />
+        </div>
+      </div>
     </>
   );
 }
