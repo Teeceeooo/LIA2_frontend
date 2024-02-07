@@ -1,4 +1,5 @@
 import { Button, TextField } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 
 export default function Createparticipant() {
@@ -6,6 +7,8 @@ export default function Createparticipant() {
     string[]
   >([]);
   const [participantItem, setParticipantItem] = useState<string | null>("");
+  const [fullName, setFullName] = useState<string | null>("");
+  const [phoneNumber, setPhoneNumber] = useState<string | null>("");
 
   function addItem() {
     if (participantItem !== null && participantItem.trim() !== "") {
@@ -24,37 +27,24 @@ export default function Createparticipant() {
   }
 
   function addParticipant() {
-    /* Denna ska flyttas till egen fil.. */
-    interface Participant {
-      fullName: string;
-      telephoneNumber: string;
+    const participantItemsArray = currentParticipantItems.map((item: string) => ({
+      description: item
+  }));
 
-      image: {
-        imageUrl: string;
-      };
-      participantItems: [
-        {
-          //id: number;
-          description: string;
-        }
-      ];
-    }
+    axios.post('http://localhost:9090/api/v1/participants/add', {
+      id: 1337,
+      fullName: fullName,
+      telephoneNumber: phoneNumber,
+      participantItems: participantItemsArray
 
-    /* Fylla upp detta objekt med den information som finns för att sedan göra en POST. */
-    let newParticipant: Participant = {
-      fullName: "",
-      telephoneNumber: "",
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
-      image: {
-        imageUrl: "",
-      },
-      participantItems: [
-        {
-          //id: number;
-          description: "",
-        },
-      ],
-    };
   }
 
   return (
@@ -65,12 +55,15 @@ export default function Createparticipant() {
         label="Fullständigt namn"
         multiline
         maxRows={1}
+        onChange={(e) => setFullName(e.target.value)}
       />
       <TextField
         id="outlined-multiline-flexible"
         label="Telefonnummer"
         multiline
         maxRows={1}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+
       />
 
       <div className="add-item-container">
