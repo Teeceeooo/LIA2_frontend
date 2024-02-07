@@ -14,13 +14,13 @@ function App() {
     <>
       <div className="App">
         <PersistentDrawerLeft />
-        {/*<BrowserRouter>
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<QrScanner />} />
             <Route path="/participant/:id" element={<Participant />} />
           </Routes>
           <Layout />
-        </BrowserRouter>*/}
+        </BrowserRouter>
         <div className="create-participant-container">
           <Createparticipant />
         </div>

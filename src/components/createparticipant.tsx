@@ -32,10 +32,14 @@ export default function Createparticipant() {
   }));
 
     axios.post('http://localhost:9090/api/v1/participants/add', {
-      id: 1337,
+      id: 1338,
       fullName: fullName,
       telephoneNumber: phoneNumber,
-      participantItems: participantItemsArray
+      participantItems: participantItemsArray,
+      image : {
+        id: 2,
+        imageUrl: 'ac33ee62-2ab0-4172-8383-704e9c95ad13.png'
+      }
 
     })
     .then(function (response) {
