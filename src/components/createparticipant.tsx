@@ -9,6 +9,7 @@ export default function Createparticipant() {
   const [participantItem, setParticipantItem] = useState<string | null>("");
   const [fullName, setFullName] = useState<string | null>("");
   const [phoneNumber, setPhoneNumber] = useState<string | null>("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   function addItem() {
     if (participantItem !== null && participantItem.trim() !== "") {
@@ -26,34 +27,63 @@ export default function Createparticipant() {
     );
   }
 
+  function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setImageFile(files[0]);
+    }
+  }
+
   function addParticipant() {
     const participantItemsArray = currentParticipantItems.map((item: string) => ({
-      description: item
-  }));
-
-    axios.post('http://localhost:9090/api/v1/participants/add', {
-      id: 1338,
-      fullName: fullName,
-      telephoneNumber: phoneNumber,
-      participantItems: participantItemsArray,
-      image : {
-        id: 2,
-        imageUrl: 'ac33ee62-2ab0-4172-8383-704e9c95ad13.png'
-      }
-
+      description: item,
+    }));
+  
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append("file", imageFile);
+    }
+  
+    axios.post("http://localhost:9090/api/v1/images/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     })
-    .then(function (response) {
-      console.log(response);
+    .then((response) => {
+      const imageUrl = response.data;
+  
+      const participantData = {
+        id: 1338,
+        fullName: fullName,
+        telephoneNumber: phoneNumber,
+        participantItems: participantItemsArray,
+        image: {
+          imageUrl: imageUrl,
+        },
+      };
+  
+      axios.post("http://localhost:9090/api/v1/participants/add", participantData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch((error) => {
+      console.error(error);
     });
-
   }
+  
 
   return (
     <div>
-      <input type="file" accept="image/*" capture />
+      <input
+        type="file"
+        accept="image/*"
+        capture
+        onChange={handleImageUpload}
+      />
       <TextField
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
@@ -67,7 +97,6 @@ export default function Createparticipant() {
         multiline
         maxRows={1}
         onChange={(e) => setPhoneNumber(e.target.value)}
-
       />
 
       <div className="add-item-container">
