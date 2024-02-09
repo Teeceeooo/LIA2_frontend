@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 interface Participant {
   fullName: string;
   telephoneNumber: string;
+  comment: string;
 
   image: {
     imageUrl: string;
@@ -77,6 +78,10 @@ export default function Participant() {
         <Typography gutterBottom variant="h5" component="div">
           {user?.fullName}
         </Typography>
+
+        <Typography variant="body2" color="text.secondary">
+        {user?.comment}
+      </Typography>
 
         <ul className="participant-list">
           {user?.participantItems.map((u) => (

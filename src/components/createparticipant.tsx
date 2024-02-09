@@ -9,6 +9,7 @@ export default function Createparticipant() {
   const [participantItem, setParticipantItem] = useState<string | null>("");
   const [fullName, setFullName] = useState<string | null>("");
   const [phoneNumber, setPhoneNumber] = useState<string | null>("");
+  const [comment, setComment] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   function addItem() {
@@ -56,6 +57,7 @@ export default function Createparticipant() {
         id: 1338,
         fullName: fullName,
         telephoneNumber: phoneNumber,
+        comment: comment,
         participantItems: participantItemsArray,
         image: {
           imageUrl: imageUrl,
@@ -97,6 +99,15 @@ export default function Createparticipant() {
         multiline
         maxRows={1}
         onChange={(e) => setPhoneNumber(e.target.value)}
+      />
+
+      <TextField
+        id="outlined-multiline-flexible"
+        label="Kommentar"
+        multiline
+        maxRows={4}
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
       />
 
       <div className="add-item-container">
