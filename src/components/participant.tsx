@@ -46,13 +46,13 @@ export default function Participant() {
 
   useEffect(() => {
     if (user) {
-      console.log(user.participantItems[0].description + " <<<<<<<<<<<<<<<<<<");
       fetchImage();
     }
   }, [user]);
 
   const [profileImage, setProfileImg] = useState<string | undefined>(undefined);
   const fetchImage = async () => {
+    setProfileImg(undefined);
     try {
       const response = await axios.get(
         "http://localhost:9090/api/v1/images/img/" + user?.image.imageUrl,
@@ -71,7 +71,7 @@ export default function Participant() {
     <Card sx={{ maxWidth: 500 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={profileImage}
+        image={profileImage || "default-image.jpg"}
         title="Profile picture"
       />
       <CardContent>
@@ -80,8 +80,8 @@ export default function Participant() {
         </Typography>
 
         <Typography variant="body2" color="text.secondary">
-        {user?.comment}
-      </Typography>
+          {user?.comment}
+        </Typography>
 
         <ul className="participant-list">
           {user?.participantItems.map((u) => (

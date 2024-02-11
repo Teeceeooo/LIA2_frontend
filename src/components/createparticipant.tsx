@@ -36,48 +36,71 @@ export default function Createparticipant() {
   }
 
   function addParticipant() {
-    const participantItemsArray = currentParticipantItems.map((item: string) => ({
-      description: item,
-    }));
-  
+    const participantItemsArray = currentParticipantItems.map(
+      (item: string) => ({
+        description: item,
+      })
+    );
+
+    let participantData = {
+      id: 1400,
+      fullName: fullName,
+      telephoneNumber: phoneNumber,
+      comment: comment,
+      participantItems: participantItemsArray,
+      image: {
+        imageUrl: "default-image.jpg",
+      },
+    };
     const formData = new FormData();
     if (imageFile) {
       formData.append("file", imageFile);
-    }
-  
-    axios.post("http://localhost:9090/api/v1/images/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      const imageUrl = response.data;
-  
-      const participantData = {
-        id: 1338,
-        fullName: fullName,
-        telephoneNumber: phoneNumber,
-        comment: comment,
-        participantItems: participantItemsArray,
-        image: {
-          imageUrl: imageUrl,
-        },
-      };
-  
-      axios.post("http://localhost:9090/api/v1/participants/add", participantData)
+
+      axios
+        .post("http://localhost:9090/api/v1/images/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          const imageUrl = response.data;
+
+          participantData = {
+            id: 1400,
+            fullName: fullName,
+            telephoneNumber: phoneNumber,
+            comment: comment,
+            participantItems: participantItemsArray,
+            image: {
+              imageUrl: imageUrl,
+            },
+          };
+          axios
+            .post(
+              "http://localhost:9090/api/v1/participants/add",
+              participantData
+            )
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      axios
+        .post("http://localhost:9090/api/v1/participants/add", participantData)
         .then((response) => {
           console.log(response);
         })
         .catch((error) => {
           console.error(error);
         });
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    }
   }
-  
-
   return (
     <div>
       <input
