@@ -1,5 +1,4 @@
 import { Button, TextField } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
 import addParticipant from "../api/postparticipantapi";
 import { useParams } from "react-router-dom";
