@@ -4,18 +4,19 @@
   box-sizing: border-box;
 }
 
+/* Skapa ny participant komponent */
+
 .create-participant-container {
   display: grid;
   place-items: center;
   margin-top: 100px;
 }
 
-/* Skapa ny participant komponent */
-
 .add-item-container {
   display: flex;
   flex-direction: row;
-  width: 75%;
+  align-items: "center";
+  width: 95%;
 }
 
 .list-item-post {

@@ -38,13 +38,14 @@ export default function Createparticipant() {
   }
 
   return (
-    <div>
+    <div className="create-participant-container">
       <input
         type="file"
         accept="image/*"
         capture
         onChange={handleImageUpload}
       />
+
       <TextField
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
