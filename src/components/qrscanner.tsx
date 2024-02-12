@@ -4,22 +4,19 @@ import axios from "axios";
 import { Outlet, Link } from "react-router-dom";
 import Participant from "./participant";
 import { Switch } from "@mui/material";
-import { Route, useNavigate  } from "react-router-dom";
-
+import { Route, useNavigate } from "react-router-dom";
 
 export default function QrScanner() {
   let scanner: Html5QrcodeScanner | null = null;
   const [QRresult, setQRresult] = useState<Participant | null>(null);
   const navigate = useNavigate();
 
-
   interface Participant {
-    fullName : string,
-    image : {
-      imageUrl : string
-    }
+    fullName: string;
+    image: {
+      imageUrl: string;
+    };
   }
- 
 
   useEffect(() => {
     if (!scanner) {
@@ -36,30 +33,29 @@ export default function QrScanner() {
       );
       scanner.render(success, error);
     }
-    
-    function success(id : any) {
-      axios.get("http://localhost:9090/api/v1/participants/findById/" + id)
-      .then((response) => {
-        if(response.data === true){
-          navigate(`/participant/${id}`, { state: { id: id } });
-        } else if (response.data === false){
-          console.log("FAAAAAAAAAAAALSSSSSSSSEEEEEEEEEE")
-        }
-      });
-    }
 
-    
+    function success(id: string) {
+      scanner?.clear();
+      axios
+        .get("http://localhost:9090/api/v1/participants/findById/" + id)
+        .then((response) => {
+          if (response.data === true) {
+            navigate(`/participant/${id}`, { state: { id: id } });
+          } else if (response.data === false) {
+            navigate(`/createparticipant/${id}`, { state: { id: id } });
+          }
+        });
+    }
 
     function error(err: any) {
       console.warn(err);
-    } 
+    }
   }, []);
-    return (
-      <>
-        <div className="qr-container">
-          <div id="reader">
-          </div>
-          </div>
-      </>
-    );
+  return (
+    <>
+      <div className="qr-container">
+        <div id="reader"></div>
+      </div>
+    </>
+  );
 }

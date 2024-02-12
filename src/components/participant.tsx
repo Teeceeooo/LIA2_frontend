@@ -30,7 +30,6 @@ let userId: number;
 export default function Participant() {
   const [user, setUser] = useState<Participant | null>(null);
   let { id } = useParams();
-  //const {state} = useLocation();
 
   /* Hämta objektet */
   useEffect(() => {

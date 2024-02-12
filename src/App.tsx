@@ -18,12 +18,13 @@ function App() {
           <Routes>
             <Route path="/" element={<QrScanner />} />
             <Route path="/participant/:id" element={<Participant />} />
+            <Route
+              path="/createparticipant/:id"
+              element={<Createparticipant />}
+            />
           </Routes>
           <Layout />
         </BrowserRouter>
-        <div className="create-participant-container">
-          <Createparticipant />
-        </div>
       </div>
     </>
   );

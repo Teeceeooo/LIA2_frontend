@@ -1,8 +1,11 @@
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import addParticipant from "../api/postparticipantapi";
+import { useParams } from "react-router-dom";
 
 export default function Createparticipant() {
+  let { id } = useParams<string>();
   const [currentParticipantItems, setCurrentParticipantItems] = useState<
     string[]
   >([]);
@@ -35,72 +38,6 @@ export default function Createparticipant() {
     }
   }
 
-  function addParticipant() {
-    const participantItemsArray = currentParticipantItems.map(
-      (item: string) => ({
-        description: item,
-      })
-    );
-
-    let participantData = {
-      id: 1400,
-      fullName: fullName,
-      telephoneNumber: phoneNumber,
-      comment: comment,
-      participantItems: participantItemsArray,
-      image: {
-        imageUrl: "default-image.jpg",
-      },
-    };
-    const formData = new FormData();
-    if (imageFile) {
-      formData.append("file", imageFile);
-
-      axios
-        .post("http://localhost:9090/api/v1/images/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          const imageUrl = response.data;
-
-          participantData = {
-            id: 1400,
-            fullName: fullName,
-            telephoneNumber: phoneNumber,
-            comment: comment,
-            participantItems: participantItemsArray,
-            image: {
-              imageUrl: imageUrl,
-            },
-          };
-          axios
-            .post(
-              "http://localhost:9090/api/v1/participants/add",
-              participantData
-            )
-            .then((response) => {
-              console.log(response);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      axios
-        .post("http://localhost:9090/api/v1/participants/add", participantData)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }
   return (
     <div>
       <input
@@ -162,7 +99,20 @@ export default function Createparticipant() {
           </li>
         ))}
       </ul>
-      <Button variant="outlined" size="medium" onClick={addParticipant}>
+      <Button
+        variant="outlined"
+        size="medium"
+        onClick={() =>
+          addParticipant(
+            fullName,
+            phoneNumber,
+            comment,
+            imageFile,
+            currentParticipantItems,
+            id || "0"
+          )
+        }
+      >
         Skapa
       </Button>
     </div>

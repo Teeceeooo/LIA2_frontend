@@ -1,0 +1,76 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import React from "react";
+
+export default function addParticipant(
+  fullName: string | null,
+  phoneNumber: string | null,
+  comment: string | null,
+  imageFile: File | null,
+  currentParticipantItems: string[],
+  qrid: string
+) {
+  const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
+  const participantItemsArray = currentParticipantItems.map((item: string) => ({
+    description: item,
+  }));
+
+  let participantData = {
+    id: qridNumber,
+    fullName: fullName,
+    telephoneNumber: phoneNumber,
+    comment: comment,
+    participantItems: participantItemsArray,
+    image: {
+      imageUrl: "default-image.jpg",
+    },
+  };
+  const formData = new FormData();
+  if (imageFile) {
+    formData.append("file", imageFile);
+
+    axios
+      .post("http://localhost:9090/api/v1/images/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        const imageUrl = response.data;
+
+        participantData = {
+          id: qridNumber,
+          fullName: fullName,
+          telephoneNumber: phoneNumber,
+          comment: comment,
+          participantItems: participantItemsArray,
+          image: {
+            imageUrl: imageUrl,
+          },
+        };
+        axios
+          .post(
+            "http://localhost:9090/api/v1/participants/add",
+            participantData
+          )
+          .then((response) => {
+            /* Navigera här direkt till QR scannern igen */
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    axios
+      .post("http://localhost:9090/api/v1/participants/add", participantData)
+      .then(() => {
+        /* Navigera här direkt till QR scannern igen */
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+}
