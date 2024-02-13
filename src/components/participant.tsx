@@ -5,9 +5,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, Navigate, Route, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import Createparticipant from "./createparticipant";
+
 
 interface Participant {
   fullName: string;
@@ -30,6 +33,9 @@ let userId: number;
 export default function Participant() {
   const [user, setUser] = useState<Participant | null>(null);
   let { id } = useParams();
+  const navigate = useNavigate();
+
+  
 
   /* Hämta objektet */
   useEffect(() => {
@@ -88,12 +94,19 @@ export default function Participant() {
           ))}
         </ul>
       </CardContent>
-      <CardActions>
-        {/* Objektets telefonnummer */}
-        <a href={"tel:" + user?.telephoneNumber}>
-          <PhoneAndroidIcon />
-        </a>
+      <CardActions className="card-actions-element">
+        <div className="icon-container">
+          {/* Objektets telefonnummer */}
+          <a href={"tel:" + user?.telephoneNumber}>
+            <PhoneAndroidIcon className="phone-icon"/>
+          </a>
+          <ModeEditIcon className="edit-icon" onClick={editParticipant}/>
+        </div>
       </CardActions>
     </Card>
   );
+
+  function editParticipant() {
+    navigate(`/edituser`, { state: { currentUser : user}});
+  }
 }

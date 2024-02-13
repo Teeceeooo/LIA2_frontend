@@ -234,6 +234,26 @@ footer p a {
   
 }
 
-.input-field-create-pariticpant {
-  margin-bottom:10px;
+/* IKONER & CONTAINER*/
+
+.card-actions-element {
+  background-color: rgba(189, 189, 189, 0.493);
 }
+
+.icon-container {
+  display:flex;
+  width:100%;
+  justify-content: space-evenly;
+  padding:5px;
+}
+
+.phone-icon, .edit-icon {
+  font-size:2rem !important;
+  color: rgb(96, 96, 165);
+  
+}
+
+.test {
+  background-color: green;
+}
+
