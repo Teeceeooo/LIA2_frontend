@@ -1,16 +1,15 @@
 import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import addParticipant from "../api/postparticipantapi";
 import editParticipant from "../api/editparticipantapi";
 import { useLocation, useParams } from "react-router-dom";
 
 export default function Createparticipant() {
-
   interface Participant {
     fullName: string;
     telephoneNumber: string;
     comment: string;
-  
+
     image: {
       imageUrl: string;
     };
@@ -25,15 +24,10 @@ export default function Createparticipant() {
   let { id } = useParams<string>();
   let { state } = useLocation();
 
-  if(state != null) {
-      console.log(state);
-  }
-  
-  function testing() {
-   console.log(state);
-   console.log(window.location.href)
-  }
-  
+  useEffect(() => {
+    /* Fyll datan i useStates? */
+  }, [state]);
+
   const [currentParticipantItems, setCurrentParticipantItems] = useState<
     string[]
   >([]);
@@ -66,18 +60,10 @@ export default function Createparticipant() {
     }
   }
 
-  let editMode : boolean = false;
-
   return (
     <div className="container-create-participant">
-      <input
-        type="file"
-        accept="image/*"
-        capture
-        onChange={handleImageUpload}
-      />
       <TextField
-        defaultValue={state?.currentUser.fullName}
+        defaultValue="ID FINNS"
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
         multiline
@@ -85,7 +71,6 @@ export default function Createparticipant() {
         onChange={(e) => setFullName(e.target.value)}
       />
       <TextField
-        defaultValue={state?.currentUser.telephoneNumber}
         id="outlined-multiline-flexible"
         label="Telefonnummer"
         multiline
@@ -94,15 +79,12 @@ export default function Createparticipant() {
       />
 
       <TextField
-        defaultValue={state?.currentUser.comment}
         id="outlined-multiline-flexible"
         label="Kommentar"
         multiline
         maxRows={4}
         onChange={(e) => setComment(e.target.value)}
-        
       />
-
       <div id="add-to-list-container">
         <TextField
           id="outlined-multiline-flexible"
@@ -115,8 +97,6 @@ export default function Createparticipant() {
           +
         </button>
       </div>
-
-      <button onClick={testing}>TEST</button>
 
       <ul
         className="participant-list-post"
@@ -133,47 +113,43 @@ export default function Createparticipant() {
           </li>
         ))}
       </ul>
+      {window.location.href.includes("createparticipant") && (
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={() =>
+            addParticipant(
+              fullName,
+              phoneNumber,
+              comment,
+              imageFile,
+              currentParticipantItems,
+              id || "0"
+            )
+          }
+        >
+          Skapa
+        </Button>
+      )}
 
-
-      {!state.currentUser.fullName &&
-      <Button
-        variant="outlined"
-        size="medium"
-        onClick={() =>
-          addParticipant(
-            fullName,
-            phoneNumber,
-            comment,
-            imageFile,
-            currentParticipantItems,
-            id || "0",
-            
-          )
-        }
-      >
-        Skapa
-      </Button>}
-    
-
-      {state.currentUser.fullName &&
-      <Button
-        variant="outlined"
-        size="medium"
-        onClick={() =>
-          editParticipant(
-            fullName,
-            phoneNumber,
-            comment,
-            imageFile,
-            currentParticipantItems,
-            id || "0",
-            
-          )
-        }
-      >
-        Redigera
-      </Button>}
+      {window.location.href.includes("edituser") && (
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={() =>
+            editParticipant(
+              fullName,
+              phoneNumber,
+              comment,
+              imageFile,
+              currentParticipantItems,
+              id || "0"
+            )
+          }
+        >
+          Redigera
+        </Button>
+      )}
     </div>
-    
   );
 }

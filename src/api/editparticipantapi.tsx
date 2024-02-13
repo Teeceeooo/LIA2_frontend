@@ -9,6 +9,4 @@ export default function editParticipant(
   imageFile: File | null,
   currentParticipantItems: string[],
   qrid: string
-) {
-
-}
+) {}
