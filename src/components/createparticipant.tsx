@@ -38,7 +38,7 @@ export default function Createparticipant() {
   }
 
   return (
-    <div>
+    <div className="container-create-participant">
       <input
         type="file"
         accept="image/*"
@@ -69,7 +69,7 @@ export default function Createparticipant() {
         onChange={(e) => setComment(e.target.value)}
       />
 
-      <div className="add-item-container">
+      <div id="add-to-list-container">
         <TextField
           id="outlined-multiline-flexible"
           label="Lägg till pryl"
@@ -79,7 +79,7 @@ export default function Createparticipant() {
           onChange={(e) => setParticipantItem(e.target.value)}
         />
         <button className="add-item-btn" onClick={addItem}>
-          Lägg till
+          +
         </button>
       </div>
 
@@ -108,7 +108,8 @@ export default function Createparticipant() {
             comment,
             imageFile,
             currentParticipantItems,
-            id || "0"
+            id || "0",
+            
           )
         }
       >
