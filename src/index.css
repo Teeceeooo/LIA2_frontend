@@ -4,44 +4,122 @@
   box-sizing: border-box;
 }
 
-.create-participant-container {
-  display: grid;
-  place-items: center;
-  margin-top: 100px;
+html body {
+  z-index: -1;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 29%, rgba(53,53,92,1) 100%, rgba(0,212,255,1) 98%);
+}
+/* Skapa ny participant komponent */
+.MuiFormControl-root  {
+  width:85%;
+  margin-top:10px !important;
+  margin-bottom:10px !important;
+  border:1px white solid !important;
+  color:white !important;
+  border-radius: 5px !important;
+  font-family: "Chakra Petch", sans-serif !important;
 }
 
-/* Skapa ny participant komponent */
+#outlined-multiline-flexible {
+  color:white;
+  font-family: "Chakra Petch", sans-serif;
+}
 
+/* Placeholder text för label */
+.MuiFormControl-root label  {
+  color:white;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+#add-to-list-container {
+  display:flex;
+  flex-direction: row;
+  max-width:85%;
+  text-align: center;
+}
+
+/* Knappen för att lägga till prylar på participant i create participant */
+#add-to-list-container .add-item-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; 
+  height: 50px; 
+  font-size: 20px;
+  color:white; 
+  background-color: transparent;
+  border-radius: 5px;
+  margin-left:30px;
+  padding:20px;
+  margin-top:12px;
+  border: white solid 1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+
+}
+
+/* Huvud container för hela create participant */
+.container-create-participant {
+  display:flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+ }
+
+ /* Knappen "Skapa" i createparticipant */
+ .container-create-participant .MuiButton-outlined {
+  border:2px solid white;
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color:white;
+  margin-top:30px;
+ } 
+
+ /* Container för tillagda items i create participant */
 .add-item-container {
   display: flex;
   flex-direction: row;
   width: 75%;
+  overflow:scroll;
 }
 
 .list-item-post {
   display: flex;
   justify-content: space-between;
   padding: 8px;
+  font-family: "Chakra Petch", sans-serif;
+
 }
 
-.add-item-btn {
-  border: solid #333 1px;
-  background-color: transparent;
-  width: 50%;
-  font-size: 1rem;
-  font-family: "Courier New", Courier, monospace;
-  cursor: pointer;
-}
-
+/* Knappen för att ta bort items ur listan i create participant */
 .remove-btn {
-  border: none;
-  color: white;
-  font-size: 1rem;
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.185);
-  background-color: rgb(255, 109, 109);
-  height: 50px;
-  width: 50px;
-}
+    background: #FF4742;
+    border: 1px solid #FF4742;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    width:50px;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+  }
+  
+
 
 .remove-btn:hover {
   background-color: rgb(255, 45, 45);
@@ -56,20 +134,27 @@
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.185);
   line-height: 3;
   font-size: 1.2rem;
+  color:white;
 }
 
 .participant-list-post li:nth-child(odd) {
-  background-color: whitesmoke;
+  background-color: rgba(245, 245, 245, 0.329);
 }
+
+.participant-list-post li:nth-child(even) {
+  background-color: rgba(245, 245, 245, 0.103);
+}
+
+
 
 /* Participant komponent */
 .css-1gcg9uy-MuiPaper-root-MuiCard-root {
-  margin-top: 50px;
+  /*margin-top: 50px;*/
   width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: auto;
-  margin-top: auto;
+
 }
 
 .css-h93ljk-MuiTypography-root {
@@ -82,7 +167,7 @@
 
 .participant-list li {
   list-style-type: none;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Chakra Petch", sans-serif;
   padding: 10px;
   background-color: white;
   font-size: 1rem;
@@ -108,7 +193,7 @@ footer p {
   color: white;
   font-size: 1em;
   text-align: center;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Chakra Petch", sans-serif;
 }
 
 footer p a {
@@ -146,4 +231,9 @@ footer p a {
   color: white;
   background-color: #1976d2;
   font-size: 1.2rem;
+  
+}
+
+.input-field-create-pariticpant {
+  margin-bottom:10px;
 }

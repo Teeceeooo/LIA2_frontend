@@ -22,7 +22,8 @@ export default function addParticipant(
     comment: comment,
     participantItems: participantItemsArray,
     image: {
-      imageUrl: "default-image.jpg",
+      id: 0,
+      imageUrl: "default-image.png",
     },
   };
   const formData = new FormData();
@@ -45,6 +46,7 @@ export default function addParticipant(
           comment: comment,
           participantItems: participantItemsArray,
           image: {
+            id: 0,
             imageUrl: imageUrl,
           },
         };
