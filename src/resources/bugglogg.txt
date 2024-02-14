@@ -1,0 +1,1 @@
+När vi lägger till en participant utan bild får denne ändå ett ID på bild. (Vet ej om detta är ett problem eller inte med de borde bli med fler bilder på användare..  default bilden visas om personen inte har en bild kopplad till sig.)

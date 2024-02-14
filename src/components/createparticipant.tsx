@@ -3,54 +3,60 @@ import React, { useEffect, useState } from "react";
 import addParticipant from "../api/postparticipantapi";
 import editParticipant from "../api/editparticipantapi";
 import { useLocation, useParams } from "react-router-dom";
+import Participant from "../interfaces/participantInterface";
+import Item from "../interfaces/itemInterface";
 
 export default function Createparticipant() {
-  interface Participant {
-    fullName: string;
-    telephoneNumber: string;
-    comment: string;
 
-    image: {
-      imageUrl: string;
-    };
-    participantItems: [
-      {
-        id: number;
-        description: string;
-      }
-    ];
-  }
 
   let { id } = useParams<string>();
+
+  const isEdit = window.location.pathname.includes("edituser");
+
+  
   let { state } = useLocation();
+  const currentUser = state.currentUser;
+
 
   useEffect(() => {
-    /* Fyll datan i useStates? */
+   if(state =! null){
+   /* setEditUserId(state.currentUser.id)*/
+   console.log(state);
+  } 
+  
   }, [state]);
 
   const [currentParticipantItems, setCurrentParticipantItems] = useState<
-    string[]
-  >([]);
-  const [participantItem, setParticipantItem] = useState<string | null>("");
-  const [fullName, setFullName] = useState<string | null>("");
-  const [phoneNumber, setPhoneNumber] = useState<string | null>("");
-  const [comment, setComment] = useState<string>("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
+    Item[]
+  >(currentUser ? currentUser.participantItems : []);
+
+  const [participantItem, setParticipantItem] = useState<string>();
+
+  const [fullName, setFullName] = useState<string>(
+    currentUser ? currentUser.fullName : ""
+  );
+
+  const [phoneNumber, setPhoneNumber] = useState<string>(currentUser ? currentUser.telephoneNumber : "");
+  const [editUserId, setEditUserId] = useState<string>(currentUser ? currentUser.id : "");
+
+  const [comment, setComment] = useState<string>(currentUser ? currentUser.comment : "");
+  const [imageUrl, setImageUrl] = useState<string>(currentUser ? currentUser.image.imageUrl : "default-image.png");
+  const [imageFile, setImageFile] = useState<File | null>(currentUser ? currentUser.image : null);
 
   function addItem() {
-    if (participantItem !== null && participantItem.trim() !== "") {
-      setCurrentParticipantItems((prevItems) => [
-        ...prevItems,
-        participantItem,
-      ]);
-      setParticipantItem("");
+    console.log(currentParticipantItems);
+    const testItem : Item = {
+      id : undefined,
+      description: participantItem, 
+      Participant: currentUser ? currentUser : null
     }
+    setCurrentParticipantItems([...currentParticipantItems, testItem]);
   }
 
   function removeItem(itemIndex: number) {
-    setCurrentParticipantItems((prevItems) =>
-      prevItems.filter((item, index) => index !== itemIndex)
-    );
+    const deleteedItem = currentParticipantItems.filter((item, index) => index !== itemIndex)
+    setCurrentParticipantItems(deleteedItem);
+    console.log('clicked remove', itemIndex)
   }
 
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -60,10 +66,17 @@ export default function Createparticipant() {
     }
   }
 
+  function testFunc(description : string) {
+    setParticipantItem(description);
+  }
+
+
+
   return (
     <div className="container-create-participant">
+      <input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
       <TextField
-        defaultValue="ID FINNS"
+        value={fullName}
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
         multiline
@@ -71,6 +84,7 @@ export default function Createparticipant() {
         onChange={(e) => setFullName(e.target.value)}
       />
       <TextField
+        value={phoneNumber}
         id="outlined-multiline-flexible"
         label="Telefonnummer"
         multiline
@@ -79,6 +93,7 @@ export default function Createparticipant() {
       />
 
       <TextField
+        value={comment}
         id="outlined-multiline-flexible"
         label="Kommentar"
         multiline
@@ -98,22 +113,64 @@ export default function Createparticipant() {
         </button>
       </div>
 
-      <ul
+
+
+{isEdit && participantItem ? (
+  <ul
         className="participant-list-post"
         style={{
-          display: currentParticipantItems.length === 0 ? "none" : "block",
+          display: currentUser.participantItems.length === 0 ? "none" : "block",
         }}
       >
-        {currentParticipantItems.map((item: string, index: number) => (
-          <li className="list-item-post" key={index}>
-            {item}
+        {currentUser.participantItems.map((item: Item, index: number) => (
+          <li className="list-item-post" key={item?.id}>
+            {item.description}
             <button className="remove-btn" onClick={() => removeItem(index)}>
               X
             </button>
           </li>
         ))}
       </ul>
-      {window.location.href.includes("createparticipant") && (
+) : (
+<ul
+        className="participant-list-post"
+        style={{
+          display: currentParticipantItems.length === 0 ? "none" : "block",
+        }}
+      >
+        {currentParticipantItems.map((item: Item, index: number) => (
+          <li className="list-item-post" key={item.id}>
+            {item.description}
+            <button className="remove-btn" onClick={() => removeItem(index)}>
+              X
+            </button>
+          </li>
+        ))}
+      </ul>
+)}
+
+
+      {isEdit ? (
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={() =>{
+            const editedParticipant: Participant = {
+              id : editUserId,
+              fullName: fullName,
+              telephoneNumber: phoneNumber,
+              image : {
+                imageUrl : imageUrl,
+              },
+              comment: comment,
+              participantItems: currentParticipantItems,
+          }
+          editParticipant(editedParticipant);
+        }
+          }>
+          Redigera
+        </Button>
+      ) : (
         <Button
           variant="outlined"
           size="medium"
@@ -129,25 +186,6 @@ export default function Createparticipant() {
           }
         >
           Skapa
-        </Button>
-      )}
-
-      {window.location.href.includes("edituser") && (
-        <Button
-          variant="outlined"
-          size="medium"
-          onClick={() =>
-            editParticipant(
-              fullName,
-              phoneNumber,
-              comment,
-              imageFile,
-              currentParticipantItems,
-              id || "0"
-            )
-          }
-        >
-          Redigera
         </Button>
       )}
     </div>

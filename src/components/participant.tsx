@@ -45,6 +45,7 @@ export default function Participant() {
         .get("http://localhost:9090/api/v1/participants/" + id)
         .then((response) => {
           setUser(response.data);
+          console.log("JA JAG KÖRS")
         });
     }
   }, []);
@@ -96,7 +97,6 @@ export default function Participant() {
       </CardContent>
       <CardActions className="card-actions-element">
         <div className="icon-container">
-          {/* Objektets telefonnummer */}
           <a href={"tel:" + user?.telephoneNumber}>
             <PhoneAndroidIcon className="phone-icon"/>
           </a>
@@ -107,6 +107,8 @@ export default function Participant() {
   );
 
   function editParticipant() {
+    console.log(user);
     navigate(`/edituser`, { state: { currentUser : user}});
   }
+
 }

@@ -1,18 +1,19 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import Item from "../interfaces/itemInterface";
 
 export default function addParticipant(
   fullName: string | null,
   phoneNumber: string | null,
   comment: string | null,
   imageFile: File | null,
-  currentParticipantItems: string[],
+  currentParticipantItems: Item[],
   qrid: string
 ) {
   const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
-  const participantItemsArray = currentParticipantItems.map((item: string) => ({
-    description: item,
+  const participantItemsArray = currentParticipantItems.map((item: Item) => ({
+    description: item.description,
   }));
 
   let participantData = {
@@ -26,6 +27,7 @@ export default function addParticipant(
       imageUrl: "default-image.png",
     },
   };
+  console.log(participantData);
   const formData = new FormData();
   if (imageFile) {
     formData.append("file", imageFile);
