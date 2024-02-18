@@ -1,33 +1,77 @@
 import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import addParticipant from "../api/postparticipantapi";
-import { useParams } from "react-router-dom";
+import editParticipant from "../api/editparticipantapi";
+import { useLocation, useParams } from "react-router-dom";
+import Participant from "../interfaces/participantInterface";
+import Item from "../interfaces/itemInterface";
 
 export default function Createparticipant() {
   let { id } = useParams<string>();
+
+  const isEdit = window.location.pathname.includes("edituser");
+
+  let { state } = useLocation();
+  const currentUser = state.currentUser;
+
+  useEffect(() => {
+    if ((state = !null)) {
+      /* setEditUserId(state.currentUser.id)*/
+      console.log(state);
+    }
+  }, [state]);
+
   const [currentParticipantItems, setCurrentParticipantItems] = useState<
-    string[]
-  >([]);
-  const [participantItem, setParticipantItem] = useState<string | null>("");
-  const [fullName, setFullName] = useState<string | null>("");
-  const [phoneNumber, setPhoneNumber] = useState<string | null>("");
-  const [comment, setComment] = useState<string>("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
+    Item[]
+  >(currentUser ? currentUser.participantItems : []);
+
+  const [participantItem, setParticipantItem] = useState<string>();
+
+  const [fullName, setFullName] = useState<string>(
+    currentUser ? currentUser.fullName : ""
+  );
+
+  const [phoneNumber, setPhoneNumber] = useState<string>(
+    currentUser ? currentUser.telephoneNumber : ""
+  );
+  const [editUserId, setEditUserId] = useState<string>(
+    currentUser ? currentUser.id : ""
+  );
+
+  const [comment, setComment] = useState<string>(
+    currentUser ? currentUser.comment : ""
+  );
+  const [imageUrl, setImageUrl] = useState<string>(
+    currentUser ? currentUser.image.imageUrl : "default-image.png"
+  );
+  const [imageFile, setImageFile] = useState<File | null>(
+    currentUser ? currentUser.image : null
+  );
+
+  function testFunc() {
+    console.log(currentParticipantItems);
+  }
 
   function addItem() {
-    if (participantItem !== null && participantItem.trim() !== "") {
-      setCurrentParticipantItems((prevItems) => [
-        ...prevItems,
-        participantItem,
-      ]);
-      setParticipantItem("");
+    const tempItem: Item = {
+      description: participantItem,
+    };
+    const updatedItems = [...currentParticipantItems, tempItem];
+    setCurrentParticipantItems(updatedItems);
+    setParticipantItem("");
+    if (currentUser) {
+      currentUser.participantItems = updatedItems;
     }
   }
 
   function removeItem(itemIndex: number) {
-    setCurrentParticipantItems((prevItems) =>
-      prevItems.filter((item, index) => index !== itemIndex)
+    const updatedItems = currentParticipantItems.filter(
+      (item, index) => index !== itemIndex
     );
+    setCurrentParticipantItems(updatedItems);
+    if (currentUser) {
+      currentUser.participantItems = updatedItems;
+    }
   }
 
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -41,11 +85,12 @@ export default function Createparticipant() {
     <div className="container-create-participant">
       <input
         type="file"
-        accept="image/*"
-        capture
+        name="avatar"
+        accept="image/png, image/jpeg"
         onChange={handleImageUpload}
       />
       <TextField
+        value={fullName}
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
         multiline
@@ -53,6 +98,7 @@ export default function Createparticipant() {
         onChange={(e) => setFullName(e.target.value)}
       />
       <TextField
+        value={phoneNumber}
         id="outlined-multiline-flexible"
         label="Telefonnummer"
         multiline
@@ -61,21 +107,19 @@ export default function Createparticipant() {
       />
 
       <TextField
+        value={comment}
         id="outlined-multiline-flexible"
         label="Kommentar"
         multiline
         maxRows={4}
-        value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-
       <div id="add-to-list-container">
         <TextField
           id="outlined-multiline-flexible"
           label="Lägg till pryl"
           multiline
           maxRows={1}
-          value={participantItem}
           onChange={(e) => setParticipantItem(e.target.value)}
         />
         <button className="add-item-btn" onClick={addItem}>
@@ -83,38 +127,80 @@ export default function Createparticipant() {
         </button>
       </div>
 
-      <ul
-        className="participant-list-post"
-        style={{
-          display: currentParticipantItems.length === 0 ? "none" : "block",
-        }}
-      >
-        {currentParticipantItems.map((item: string, index: number) => (
-          <li className="list-item-post" key={index}>
-            {item}
-            <button className="remove-btn" onClick={() => removeItem(index)}>
-              X
-            </button>
-          </li>
-        ))}
-      </ul>
-      <Button
-        variant="outlined"
-        size="medium"
-        onClick={() =>
-          addParticipant(
-            fullName,
-            phoneNumber,
-            comment,
-            imageFile,
-            currentParticipantItems,
-            id || "0",
-            
-          )
-        }
-      >
-        Skapa
-      </Button>
+      {isEdit && currentUser.participantItems ? (
+        <ul
+          className="participant-list-post"
+          style={{
+            display:
+              currentUser.participantItems.length === 0 ? "none" : "block",
+          }}
+        >
+          {currentUser.participantItems.map((item: Item, index: number) => (
+            <li className="list-item-post" key={item?.id}>
+              {item.description}
+              <button className="remove-btn" onClick={() => removeItem(index)}>
+                X
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul
+          className="participant-list-post"
+          style={{
+            display: currentParticipantItems.length === 0 ? "none" : "block",
+          }}
+        >
+          {currentParticipantItems.map((item: Item, index: number) => (
+            <li className="list-item-post" key={item.id}>
+              {item.description}
+              <button className="remove-btn" onClick={() => removeItem(index)}>
+                X
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <button onClick={testFunc}>TEST</button>
+
+      {isEdit ? (
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={() => {
+            const editedParticipant: Participant = {
+              id: editUserId,
+              fullName: fullName,
+              telephoneNumber: phoneNumber,
+              image: {
+                imageUrl: imageUrl,
+              },
+              comment: comment,
+              participantItems: currentUser.participantItems,
+            };
+            editParticipant(editedParticipant);
+          }}
+        >
+          Redigera
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={() =>
+            addParticipant(
+              fullName,
+              phoneNumber,
+              comment,
+              imageFile,
+              currentParticipantItems,
+              id || "0"
+            )
+          }
+        >
+          Skapa
+        </Button>
+      )}
     </div>
   );
 }

@@ -22,6 +22,10 @@ function App() {
               path="/createparticipant/:id"
               element={<Createparticipant />}
             />
+            <Route
+              path="/edituser"
+              element={<Createparticipant />}
+            />
           </Routes>
           <Layout />
         </BrowserRouter>
