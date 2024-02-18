@@ -7,23 +7,18 @@ import Participant from "../interfaces/participantInterface";
 import Item from "../interfaces/itemInterface";
 
 export default function Createparticipant() {
-
-
   let { id } = useParams<string>();
 
   const isEdit = window.location.pathname.includes("edituser");
 
-  
   let { state } = useLocation();
   const currentUser = state.currentUser;
 
-
   useEffect(() => {
-   if(state =! null){
-   /* setEditUserId(state.currentUser.id)*/
-   console.log(state);
-  } 
-  
+    if ((state = !null)) {
+      /* setEditUserId(state.currentUser.id)*/
+      console.log(state);
+    }
   }, [state]);
 
   const [currentParticipantItems, setCurrentParticipantItems] = useState<
@@ -36,27 +31,47 @@ export default function Createparticipant() {
     currentUser ? currentUser.fullName : ""
   );
 
-  const [phoneNumber, setPhoneNumber] = useState<string>(currentUser ? currentUser.telephoneNumber : "");
-  const [editUserId, setEditUserId] = useState<string>(currentUser ? currentUser.id : "");
+  const [phoneNumber, setPhoneNumber] = useState<string>(
+    currentUser ? currentUser.telephoneNumber : ""
+  );
+  const [editUserId, setEditUserId] = useState<string>(
+    currentUser ? currentUser.id : ""
+  );
 
-  const [comment, setComment] = useState<string>(currentUser ? currentUser.comment : "");
-  const [imageUrl, setImageUrl] = useState<string>(currentUser ? currentUser.image.imageUrl : "default-image.png");
-  const [imageFile, setImageFile] = useState<File | null>(currentUser ? currentUser.image : null);
+  const [comment, setComment] = useState<string>(
+    currentUser ? currentUser.comment : ""
+  );
+  const [imageUrl, setImageUrl] = useState<string>(
+    currentUser ? currentUser.image.imageUrl : "default-image.png"
+  );
+  const [imageFile, setImageFile] = useState<File | null>(
+    currentUser ? currentUser.image : null
+  );
+
+  function testFunc() {
+    console.log(currentParticipantItems);
+  }
 
   function addItem() {
-    console.log(currentParticipantItems);
-    const testItem : Item = {
-      id : undefined,
-      description: participantItem, 
-      Participant: currentUser ? currentUser : null
+    const tempItem: Item = {
+      description: participantItem,
+    };
+    const updatedItems = [...currentParticipantItems, tempItem];
+    setCurrentParticipantItems(updatedItems);
+    setParticipantItem("");
+    if (currentUser) {
+      currentUser.participantItems = updatedItems;
     }
-    setCurrentParticipantItems([...currentParticipantItems, testItem]);
   }
 
   function removeItem(itemIndex: number) {
-    const deleteedItem = currentParticipantItems.filter((item, index) => index !== itemIndex)
-    setCurrentParticipantItems(deleteedItem);
-    console.log('clicked remove', itemIndex)
+    const updatedItems = currentParticipantItems.filter(
+      (item, index) => index !== itemIndex
+    );
+    setCurrentParticipantItems(updatedItems);
+    if (currentUser) {
+      currentUser.participantItems = updatedItems;
+    }
   }
 
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -66,15 +81,14 @@ export default function Createparticipant() {
     }
   }
 
-  function testFunc(description : string) {
-    setParticipantItem(description);
-  }
-
-
-
   return (
     <div className="container-create-participant">
-      <input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageUpload}/>
+      <input
+        type="file"
+        name="avatar"
+        accept="image/png, image/jpeg"
+        onChange={handleImageUpload}
+      />
       <TextField
         value={fullName}
         id="outlined-multiline-flexible"
@@ -113,61 +127,60 @@ export default function Createparticipant() {
         </button>
       </div>
 
-
-
-{isEdit && participantItem ? (
-  <ul
-        className="participant-list-post"
-        style={{
-          display: currentUser.participantItems.length === 0 ? "none" : "block",
-        }}
-      >
-        {currentUser.participantItems.map((item: Item, index: number) => (
-          <li className="list-item-post" key={item?.id}>
-            {item.description}
-            <button className="remove-btn" onClick={() => removeItem(index)}>
-              X
-            </button>
-          </li>
-        ))}
-      </ul>
-) : (
-<ul
-        className="participant-list-post"
-        style={{
-          display: currentParticipantItems.length === 0 ? "none" : "block",
-        }}
-      >
-        {currentParticipantItems.map((item: Item, index: number) => (
-          <li className="list-item-post" key={item.id}>
-            {item.description}
-            <button className="remove-btn" onClick={() => removeItem(index)}>
-              X
-            </button>
-          </li>
-        ))}
-      </ul>
-)}
-
+      {isEdit && currentUser.participantItems ? (
+        <ul
+          className="participant-list-post"
+          style={{
+            display:
+              currentUser.participantItems.length === 0 ? "none" : "block",
+          }}
+        >
+          {currentUser.participantItems.map((item: Item, index: number) => (
+            <li className="list-item-post" key={item?.id}>
+              {item.description}
+              <button className="remove-btn" onClick={() => removeItem(index)}>
+                X
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul
+          className="participant-list-post"
+          style={{
+            display: currentParticipantItems.length === 0 ? "none" : "block",
+          }}
+        >
+          {currentParticipantItems.map((item: Item, index: number) => (
+            <li className="list-item-post" key={item.id}>
+              {item.description}
+              <button className="remove-btn" onClick={() => removeItem(index)}>
+                X
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <button onClick={testFunc}>TEST</button>
 
       {isEdit ? (
         <Button
           variant="outlined"
           size="medium"
-          onClick={() =>{
+          onClick={() => {
             const editedParticipant: Participant = {
-              id : editUserId,
+              id: editUserId,
               fullName: fullName,
               telephoneNumber: phoneNumber,
-              image : {
-                imageUrl : imageUrl,
+              image: {
+                imageUrl: imageUrl,
               },
               comment: comment,
-              participantItems: currentParticipantItems,
-          }
-          editParticipant(editedParticipant);
-        }
-          }>
+              participantItems: currentUser.participantItems,
+            };
+            editParticipant(editedParticipant);
+          }}
+        >
           Redigera
         </Button>
       ) : (
