@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import React from "react";
 import Item from "../interfaces/itemInterface";
 
@@ -59,6 +58,7 @@ export default function addParticipant(
           )
           .then((response) => {
             /* Navigera här direkt till QR scannern igen */
+            console.log(response.data);
           })
           .catch((error) => {
             console.error(error);
