@@ -14,13 +14,6 @@ export default function Createparticipant() {
   let { state } = useLocation();
   const currentUser = state.currentUser;
 
-  useEffect(() => {
-    if ((state = !null)) {
-      /* setEditUserId(state.currentUser.id)*/
-      console.log(state);
-    }
-  }, [state]);
-
   const [currentParticipantItems, setCurrentParticipantItems] = useState<
     Item[]
   >(currentUser ? currentUser.participantItems : []);
@@ -75,10 +68,12 @@ export default function Createparticipant() {
   }
 
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    console.log("KÖRS JAG? mvh handleupload");
     const files = event.target.files;
     if (files && files.length > 0) {
       setImageFile(files[0]);
     }
+    console.log(imageFile);
   }
 
   return (
@@ -178,7 +173,7 @@ export default function Createparticipant() {
               comment: comment,
               participantItems: currentUser.participantItems,
             };
-            editParticipant(editedParticipant);
+            editParticipant(editedParticipant, imageFile);
           }}
         >
           Redigera
