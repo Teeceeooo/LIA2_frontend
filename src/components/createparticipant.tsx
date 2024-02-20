@@ -41,6 +41,8 @@ export default function Createparticipant() {
     currentUser ? currentUser.image : null
   );
 
+  const [imageIsChanged, setImageIsChanged] = useState<boolean>(false);
+
 
   function addItem() {
     const tempItem: Item = {
@@ -65,10 +67,10 @@ export default function Createparticipant() {
   }
 
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log("KÖRS JAG? mvh handleupload");
     const files = event.target.files;
     if (files && files.length > 0) {
       setImageFile(files[0]);
+      setImageIsChanged(true);
     }
   }
 
@@ -83,7 +85,7 @@ export default function Createparticipant() {
         onChange={handleImageUpload}
       />
       <TextField
-        value={fullName ? fullName : ""}
+        value={fullName}
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
         multiline
@@ -91,7 +93,7 @@ export default function Createparticipant() {
         onChange={(e) => setFullName(e.target.value)}
       />
       <TextField
-        value={phoneNumber ? phoneNumber : ""}
+        value={phoneNumber}
         id="outlined-multiline-flexible"
         label="Telefonnummer"
         multiline
@@ -100,7 +102,7 @@ export default function Createparticipant() {
       />
 
       <TextField
-        value={comment ? comment : ""}
+        value={comment}
         id="outlined-multiline-flexible"
         label="Kommentar"
         multiline
@@ -109,7 +111,7 @@ export default function Createparticipant() {
       />
       <div id="add-to-list-container">
         <TextField
-          value={participantItem ? participantItem : ""}
+          //value={participantItem}
           id="outlined-multiline-flexible"
           label="Lägg till pryl"
           multiline
@@ -155,7 +157,7 @@ export default function Createparticipant() {
           ))}
         </ul>
       )}
-     
+
 
       {isEdit ? (
         <Button
@@ -172,7 +174,8 @@ export default function Createparticipant() {
               comment: comment,
               participantItems: currentUser.participantItems,
             };
-            editParticipant(editedParticipant, imageFile);
+            console.log("ffffffffffff" + editedParticipant)
+            editParticipant(editedParticipant, imageFile, imageIsChanged);
           }}
         >
           Redigera

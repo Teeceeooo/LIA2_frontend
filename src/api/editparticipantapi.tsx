@@ -4,10 +4,12 @@ import Participant from "../interfaces/participantInterface";
 
 export default function editParticipant(
   editedParticipant: Participant,
-  image: File | null
+  image: File | null,
+  isImageChanged: boolean
 ) {
   const formData = new FormData();
-  if (image) {
+ 
+  if (image && isImageChanged) {
     formData.append("file", image);
     axios
       .post("http://localhost:9090/api/v1/images/upload", formData, {
@@ -16,6 +18,7 @@ export default function editParticipant(
         },
       })
       .then((response) => {
+        console.log("------->" + editedParticipant.fullName)
         const imageUrl = response.data;
         editedParticipant.image.imageUrl = imageUrl;
         axios
@@ -28,10 +31,12 @@ export default function editParticipant(
           })
           .catch((error) => {
             console.error(error);
+            console.log("1")
           });
       })
       .catch((error) => {
         console.error(error);
+        console.log("2")
       });
   } else {
     axios
@@ -41,6 +46,7 @@ export default function editParticipant(
       })
       .catch((error) => {
         console.error(error);
+        console.log("2")
       });
   }
 }
