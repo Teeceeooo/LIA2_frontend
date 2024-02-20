@@ -40,6 +40,7 @@ export default function QrScanner() {
     function error(err: any) {
       console.warn(err);
     }
+    
   }, []);
   return (
     <>

@@ -41,9 +41,6 @@ export default function Createparticipant() {
     currentUser ? currentUser.image : null
   );
 
-  function testFunc() {
-    console.log(currentParticipantItems);
-  }
 
   function addItem() {
     const tempItem: Item = {
@@ -73,19 +70,20 @@ export default function Createparticipant() {
     if (files && files.length > 0) {
       setImageFile(files[0]);
     }
-    console.log(imageFile);
   }
 
   return (
     <div className="container-create-participant">
       <input
+        title=" asd"
         type="file"
         name="avatar"
+        className="image-button"
         accept="image/png, image/jpeg"
         onChange={handleImageUpload}
       />
       <TextField
-        value={fullName}
+        value={fullName ? fullName : ""}
         id="outlined-multiline-flexible"
         label="Fullständigt namn"
         multiline
@@ -93,7 +91,7 @@ export default function Createparticipant() {
         onChange={(e) => setFullName(e.target.value)}
       />
       <TextField
-        value={phoneNumber}
+        value={phoneNumber ? phoneNumber : ""}
         id="outlined-multiline-flexible"
         label="Telefonnummer"
         multiline
@@ -102,7 +100,7 @@ export default function Createparticipant() {
       />
 
       <TextField
-        value={comment}
+        value={comment ? comment : ""}
         id="outlined-multiline-flexible"
         label="Kommentar"
         multiline
@@ -111,6 +109,7 @@ export default function Createparticipant() {
       />
       <div id="add-to-list-container">
         <TextField
+          value={participantItem ? participantItem : ""}
           id="outlined-multiline-flexible"
           label="Lägg till pryl"
           multiline
@@ -156,7 +155,7 @@ export default function Createparticipant() {
           ))}
         </ul>
       )}
-      <button onClick={testFunc}>TEST</button>
+     
 
       {isEdit ? (
         <Button
