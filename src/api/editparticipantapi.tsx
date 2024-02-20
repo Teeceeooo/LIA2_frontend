@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import Participant from "../interfaces/participantInterface";
+import config from "../config.json";
 
 export default function editParticipant(
   editedParticipant: Participant,
@@ -8,45 +9,41 @@ export default function editParticipant(
   isImageChanged: boolean
 ) {
   const formData = new FormData();
- 
+  const uploadURL = `${config.baseURL}/api/v1/images/upload`;
+  const addURL = `${config.baseURL}/api/v1/participants/add`;
+  const editParticipantURL = `${config.baseURL}/api/v1/participants/edit`;
+
   if (image && isImageChanged) {
     formData.append("file", image);
     axios
-      .post("http://localhost:9090/api/v1/images/upload", formData, {
+      .post(uploadURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
-        console.log("------->" + editedParticipant.fullName)
         const imageUrl = response.data;
         editedParticipant.image.imageUrl = imageUrl;
         axios
-          .post(
-            "http://localhost:9090/api/v1/participants/add",
-            editedParticipant
-          )
+          .put(editParticipantURL, editedParticipant)
           .then((response) => {
             /* Navigera här direkt till QR scannern igen */
           })
           .catch((error) => {
-            console.error(error);
-            console.log("1")
+            console.log(error);
           });
       })
       .catch((error) => {
         console.error(error);
-        console.log("2")
       });
   } else {
     axios
-      .post("http://localhost:9090/api/v1/participants/add", editedParticipant)
+      .put(editParticipantURL, editedParticipant)
       .then(() => {
         /* Navigera här direkt till QR scannern igen */
       })
       .catch((error) => {
         console.error(error);
-        console.log("2")
       });
   }
 }
