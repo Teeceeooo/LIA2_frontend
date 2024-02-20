@@ -85,7 +85,7 @@ export default function Participant() {
           {user?.fullName}
         </Typography>
 
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" className="comment-text">
           {user?.comment}
         </Typography>
 
