@@ -43,7 +43,6 @@ export default function Createparticipant() {
 
   const [imageIsChanged, setImageIsChanged] = useState<boolean>(false);
 
-
   function addItem() {
     const tempItem: Item = {
       description: participantItem,
@@ -158,7 +157,6 @@ export default function Createparticipant() {
         </ul>
       )}
 
-
       {isEdit ? (
         <Button
           variant="outlined"
@@ -174,7 +172,6 @@ export default function Createparticipant() {
               comment: comment,
               participantItems: currentUser.participantItems,
             };
-            console.log("ffffffffffff" + editedParticipant)
             editParticipant(editedParticipant, imageFile, imageIsChanged);
           }}
         >

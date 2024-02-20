@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import Item from "../interfaces/itemInterface";
+import config from "../config.json";
 
 export default function addParticipant(
   fullName: string | null,
@@ -10,6 +11,8 @@ export default function addParticipant(
   currentParticipantItems: Item[],
   qrid: string
 ) {
+  const addURL = `${config.baseURL}/api/v1/participants/add`;
+  const uploadURL = `${config.baseURL}/api/v1/images/upload`;
   const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
   const participantItemsArray = currentParticipantItems.map((item: Item) => ({
     description: item.description,
@@ -32,7 +35,7 @@ export default function addParticipant(
     formData.append("file", imageFile);
 
     axios
-      .post("http://localhost:9090/api/v1/images/upload", formData, {
+      .post(uploadURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -52,10 +55,7 @@ export default function addParticipant(
           },
         };
         axios
-          .post(
-            "http://localhost:9090/api/v1/participants/add",
-            participantData
-          )
+          .post(addURL, participantData)
           .then((response) => {
             /* Navigera här direkt till QR scannern igen */
             console.log(response.data);
