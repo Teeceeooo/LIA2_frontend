@@ -13,6 +13,7 @@ import Createparticipant from "./createparticipant";
 
 
 interface Participant {
+  id: string;
   fullName: string;
   telephoneNumber: string;
   comment: string;
@@ -82,7 +83,7 @@ export default function Participant() {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {user?.fullName}
+          {user?.fullName} | {user?.id}
         </Typography>
 
         <Typography variant="body2" color="text.secondary" className="comment-text">
