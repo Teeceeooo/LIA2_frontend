@@ -74,7 +74,7 @@ export default function addParticipant(
       });
   } else {
     axios
-      .post("http://localhost:9090/api/v1/participants/add", participantData)
+      .post(addURL, participantData)
       .then(() => {
         window.location.href = `${homeURL}`;
       })

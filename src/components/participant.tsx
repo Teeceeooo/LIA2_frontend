@@ -10,6 +10,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Createparticipant from "./createparticipant";
+import config from "../config.json";
 
 
 interface Participant {
@@ -35,6 +36,8 @@ export default function Participant() {
   const [user, setUser] = useState<Participant | null>(null);
   let { id } = useParams();
   const navigate = useNavigate();
+  const showParticipantURL = `${config.baseURL}/api/v1/participants/`;
+  const imgURL = `${config.baseURL}/api/v1/images/img/`;
 
   
 
@@ -43,7 +46,7 @@ export default function Participant() {
     getParticipant();
     function getParticipant() {
       axios
-        .get("http://localhost:9090/api/v1/participants/" + id)
+        .get(showParticipantURL + id)
         .then((response) => {
           setUser(response.data);
           console.log("JA JAG KÖRS")
@@ -62,7 +65,7 @@ export default function Participant() {
     setProfileImg(undefined);
     try {
       const response = await axios.get(
-        "http://localhost:9090/api/v1/images/img/" + user?.image.imageUrl,
+        imgURL + user?.image.imageUrl,
         {
           responseType: "blob",
         }
@@ -80,6 +83,9 @@ export default function Participant() {
         sx={{ height: 140 }}
         image={profileImage || "default-image.jpg"}
         title="Profile picture"
+        component="a"
+        href={profileImage || "default-image.jpg"}
+        target="_blank"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -110,6 +116,7 @@ export default function Participant() {
   function editParticipant() {
     console.log(user);
     navigate(`/edituser`, { state: { currentUser : user}});
+    console.log(user?.id)
   }
 
 }

@@ -83,6 +83,7 @@ export default function Createparticipant() {
         accept="image/png, image/jpeg"
         onChange={handleImageUpload}
       />
+      <h3 className="h3-default">Id: {currentUser ? currentUser.id : id}</h3>
       <TextField
         value={fullName}
         id="outlined-multiline-flexible"
@@ -110,7 +111,7 @@ export default function Createparticipant() {
       />
       <div id="add-to-list-container">
         <TextField
-          //value={participantItem}
+          value={participantItem}
           id="outlined-multiline-flexible"
           label="Lägg till pryl"
           multiline
