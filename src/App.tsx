@@ -12,9 +12,9 @@ import Createparticipant from "./components/createparticipant";
 function App() {
   return (
     <>
+    <BrowserRouter>
       <div className="App">
         <PersistentDrawerLeft />
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<QrScanner />} />
             <Route path="/participant/:id" element={<Participant />} />
@@ -28,8 +28,8 @@ function App() {
             />
           </Routes>
           <Layout />
-        </BrowserRouter>
       </div>
+    </BrowserRouter>
     </>
   );
 }
