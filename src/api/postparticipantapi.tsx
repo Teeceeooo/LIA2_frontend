@@ -13,6 +13,7 @@ export default function addParticipant(
 ) {
   const addURL = `${config.baseURL}/api/v1/participants/add`;
   const uploadURL = `${config.baseURL}/api/v1/images/upload`;
+  const homeURL = `${config.frontBaseURL}`;
   const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
   const participantItemsArray = currentParticipantItems.map((item: Item) => ({
     description: item.description,
@@ -60,6 +61,10 @@ export default function addParticipant(
             /* Navigera här direkt till QR scannern igen */
             console.log(response.data);
           })
+          .then(() => {
+            window.location.href = `${homeURL}`;
+
+          })
           .catch((error) => {
             console.error(error);
           });
@@ -71,7 +76,7 @@ export default function addParticipant(
     axios
       .post("http://localhost:9090/api/v1/participants/add", participantData)
       .then(() => {
-        /* Navigera här direkt till QR scannern igen */
+        window.location.href = `${homeURL}`;
       })
       .catch((error) => {
         console.error(error);

@@ -11,6 +11,7 @@ export default function editParticipant(
   const formData = new FormData();
   const uploadURL = `${config.baseURL}/api/v1/images/upload`;
   const addURL = `${config.baseURL}/api/v1/participants/add`;
+  const showParticipantURL = `${config.frontBaseURL}/participant/`;
   const editParticipantURL = `${config.baseURL}/api/v1/participants/edit`;
 
   if (image && isImageChanged) {
@@ -26,8 +27,9 @@ export default function editParticipant(
         editedParticipant.image.imageUrl = imageUrl;
         axios
           .put(editParticipantURL, editedParticipant)
-          .then((response) => {
-            /* Navigera här direkt till QR scannern igen */
+          .then(() => {
+            window.location.href = `${showParticipantURL}${editedParticipant.id}`;
+
           })
           .catch((error) => {
             console.log(error);
@@ -40,7 +42,7 @@ export default function editParticipant(
     axios
       .put(editParticipantURL, editedParticipant)
       .then(() => {
-        /* Navigera här direkt till QR scannern igen */
+        window.location.href = `${showParticipantURL}${editedParticipant.id}`;
       })
       .catch((error) => {
         console.error(error);

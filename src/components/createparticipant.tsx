@@ -175,7 +175,7 @@ export default function Createparticipant() {
             editParticipant(editedParticipant, imageFile, imageIsChanged);
           }}
         >
-          Redigera
+          Spara
         </Button>
       ) : (
         <Button
