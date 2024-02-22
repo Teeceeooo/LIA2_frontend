@@ -45,7 +45,6 @@ export default function Participant() {
         .get("http://localhost:9090/api/v1/participants/" + id)
         .then((response) => {
           setUser(response.data);
-          console.log("JA JAG KÖRS")
         });
     }
   }, []);
@@ -77,7 +76,7 @@ export default function Participant() {
     <Card sx={{ maxWidth: 500 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={profileImage || "default-image.jpg"}
+        image={profileImage || "default-image.png"}
         title="Profile picture"
       />
       <CardContent>

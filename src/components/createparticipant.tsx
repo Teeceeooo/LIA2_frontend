@@ -110,7 +110,7 @@ export default function Createparticipant() {
       />
       <div id="add-to-list-container">
         <TextField
-          //value={participantItem}
+          value={participantItem}
           id="outlined-multiline-flexible"
           label="Lägg till pryl"
           multiline
