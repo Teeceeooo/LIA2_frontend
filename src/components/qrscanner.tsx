@@ -3,12 +3,12 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import config from "../config.json";
-
+import fetchConfig from "..";
+import { config, getConfig } from "../interfaces/configInterface";
 export default function QrScanner() {
   let scanner: Html5QrcodeScanner | null = null;
   const navigate = useNavigate();
-  const participantByIdURL = `${config.baseURL}/api/v1/participants/findById/`;
+  const showParticipantURL = `${getConfig().baseURL}/api/v1/participants/findById/`;
 
   useEffect(() => {
     if (!scanner) {
@@ -26,14 +26,16 @@ export default function QrScanner() {
       scanner.render(success, error);
     }
 
-    function success(id: string) {
+    function success(id: string) {   
       scanner?.clear();
       axios
-        .get(participantByIdURL + id)
+      .get(showParticipantURL + id)
         .then((response) => {
           if (response.data === true) {
+            console.log("TRUE")
             navigate(`/participant/${id}`, { state: { id: id } });
           } else if (response.data === false) {
+            console.log("FALSE")
             navigate(`/createparticipant/${id}`, { state: { id: id } });
           }
         });
