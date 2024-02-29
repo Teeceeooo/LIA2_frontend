@@ -147,11 +147,15 @@ html body {
 
 
 /* Participant komponent */
-.css-1gcg9uy-MuiPaper-root-MuiCard-root {
+.participant-new-container {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: auto;
+}
+
+.profile-image-container {
+  max-height:20px;
 }
 
 

@@ -82,7 +82,7 @@ export default function Participant() {
   };
 
   return (
-    <Card sx={{ maxWidth: 500 }}>
+    <Card sx={{ maxWidth: 500 }} className="participant-new-container">
       <CardMedia
         sx={{ height: 140 }}
         image={profileImage || "default-image.jpg"}
@@ -90,6 +90,7 @@ export default function Participant() {
         component="a"
         href={profileImage || "default-image.jpg"}
         target="_blank"
+        className="profile-image-container"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
