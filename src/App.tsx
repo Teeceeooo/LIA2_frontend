@@ -17,7 +17,7 @@ function App() {
         <PersistentDrawerLeft />
           <Routes>
             <Route path="/" element={<QrScanner />} />
-            <Route path="/participant/:id" element={<Participant />} />
+            <Route path="/participant/:id" element={<Participant />} /> 
             <Route
               path="/createparticipant/:id"
               element={<Createparticipant />}

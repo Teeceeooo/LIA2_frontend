@@ -2,12 +2,14 @@ import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import addParticipant from "../api/postparticipantapi";
 import editParticipant from "../api/editparticipantapi";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Participant from "../interfaces/participantInterface";
 import Item from "../interfaces/itemInterface";
 
 export default function Createparticipant() {
   let { id } = useParams<string>();
+
+  const navigate = useNavigate();
 
   const isEdit = window.location.pathname.includes("edituser");
 
@@ -63,6 +65,34 @@ export default function Createparticipant() {
     if (currentUser) {
       currentUser.participantItems = updatedItems;
     }
+  }
+
+  async function handleEditParticipant() {
+    const editedParticipant: Participant = {
+      id: editUserId,
+      fullName: fullName,
+      telephoneNumber: phoneNumber,
+      image: {
+        imageUrl: imageUrl,
+      },
+      comment: comment,
+      participantItems: currentUser.participantItems,
+    };
+  
+    await editParticipant(editedParticipant, imageFile, imageIsChanged);
+    navigate("/participant/" + editUserId);
+  }
+
+  function handleAddParticipant(){
+    addParticipant(
+      fullName,
+      phoneNumber,
+      comment,
+      imageFile,
+      currentParticipantItems,
+      id || "0"
+    )
+    navigate("/");
   }
 
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -163,38 +193,21 @@ export default function Createparticipant() {
           variant="outlined"
           size="medium"
           onClick={() => {
-            const editedParticipant: Participant = {
-              id: editUserId,
-              fullName: fullName,
-              telephoneNumber: phoneNumber,
-              image: {
-                imageUrl: imageUrl,
-              },
-              comment: comment,
-              participantItems: currentUser.participantItems,
-            };
-            editParticipant(editedParticipant, imageFile, imageIsChanged);
+            handleEditParticipant()
           }}
         >
           Spara
         </Button>
       ) : (
         <Button
-          variant="outlined"
-          size="medium"
-          onClick={() =>
-            addParticipant(
-              fullName,
-              phoneNumber,
-              comment,
-              imageFile,
-              currentParticipantItems,
-              id || "0"
-            )
-          }
-        >
-          Skapa
-        </Button>
+        variant="outlined"
+        size="medium"
+        onClick={() =>
+          handleAddParticipant()
+        }
+      >
+        Skapa
+      </Button>
       )}
     </div>
   );

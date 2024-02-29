@@ -10,7 +10,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Createparticipant from "./createparticipant";
-import config from "../config.json";
+import { getConfig } from "../interfaces/configInterface";
+
 
 
 interface Participant {
@@ -36,12 +37,14 @@ export default function Participant() {
   const [user, setUser] = useState<Participant | null>(null);
   let { id } = useParams();
   const navigate = useNavigate();
-  const showParticipantURL = `${config.baseURL}/api/v1/participants/`;
-  const imgURL = `${config.baseURL}/api/v1/images/img/`;
+  const baseURL = `${getConfig().baseURL}`;
+
+  const showParticipantURL = `${baseURL}/api/v1/participants/`;
+  const imgURL = `${baseURL}/api/v1/images/img/`;
 
   
 
-  /* Hämta objektet */
+  
   useEffect(() => {
     getParticipant();
     function getParticipant() {
@@ -49,7 +52,7 @@ export default function Participant() {
         .get(showParticipantURL + id)
         .then((response) => {
           setUser(response.data);
-          console.log("JA JAG KÖRS")
+          
         });
     }
   }, []);
@@ -61,8 +64,9 @@ export default function Participant() {
   }, [user]);
 
   const [profileImage, setProfileImg] = useState<string | undefined>(undefined);
+ 
   const fetchImage = async () => {
-    setProfileImg(undefined);
+   setProfileImg(undefined);
     try {
       const response = await axios.get(
         imgURL + user?.image.imageUrl,

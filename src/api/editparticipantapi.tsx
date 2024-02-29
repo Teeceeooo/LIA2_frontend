@@ -1,51 +1,37 @@
 import axios from "axios";
 import React from "react";
 import Participant from "../interfaces/participantInterface";
-import config from "../config.json";
+import { getConfig } from "../interfaces/configInterface";
 
-export default function editParticipant(
+
+export default async function editParticipant(
   editedParticipant: Participant,
   image: File | null,
   isImageChanged: boolean
-) {
-  const formData = new FormData();
-  const uploadURL = `${config.baseURL}/api/v1/images/upload`;
-  const addURL = `${config.baseURL}/api/v1/participants/add`;
-  const showParticipantURL = `${config.frontBaseURL}/participant/`;
-  const editParticipantURL = `${config.baseURL}/api/v1/participants/edit`;
+): Promise<void> {
+  const baseURL = getConfig().baseURL;
+  const frontURL = getConfig().frontBaseURL;
 
-  if (image && isImageChanged) {
-    formData.append("file", image);
-    axios
-      .post(uploadURL, formData, {
+  const formData = new FormData();
+
+  const uploadURL = `${baseURL}/api/v1/images/upload`;
+  const editParticipantURL = `${baseURL}/api/v1/participants/edit`;
+
+  try {
+    if (image && isImageChanged) {
+      formData.append("file", image);
+      const response = await axios.post(uploadURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      })
-      .then((response) => {
-        const imageUrl = response.data;
-        editedParticipant.image.imageUrl = imageUrl;
-        axios
-          .put(editParticipantURL, editedParticipant)
-          .then(() => {
-            window.location.href = `${showParticipantURL}${editedParticipant.id}`;
+      });
+      const imageUrl = response.data;
+      editedParticipant.image.imageUrl = imageUrl;
+    }
 
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  } else {
-    axios
-      .put(editParticipantURL, editedParticipant)
-      .then(() => {
-        window.location.href = `${showParticipantURL}${editedParticipant.id}`;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    await axios.put(editParticipantURL, editedParticipant);
+  } catch (error) {
+    console.error(error);
+    throw error; 
   }
 }

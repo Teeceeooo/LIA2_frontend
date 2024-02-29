@@ -1,7 +1,8 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import Item from "../interfaces/itemInterface";
-import config from "../config.json";
+import { getConfig } from "../interfaces/configInterface";
+
 
 export default function addParticipant(
   fullName: string | null,
@@ -11,9 +12,14 @@ export default function addParticipant(
   currentParticipantItems: Item[],
   qrid: string
 ) {
-  const addURL = `${config.baseURL}/api/v1/participants/add`;
-  const uploadURL = `${config.baseURL}/api/v1/images/upload`;
-  const homeURL = `${config.frontBaseURL}`;
+
+  const baseURL = getConfig().baseURL;
+  const frontURL = getConfig().frontBaseURL;
+
+  
+  
+  const addURL = `${baseURL}/api/v1/participants/add`;
+  const uploadURL = `${baseURL}/api/v1/images/upload`;
   const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
   const participantItemsArray = currentParticipantItems.map((item: Item) => ({
     description: item.description,
@@ -58,12 +64,12 @@ export default function addParticipant(
         axios
           .post(addURL, participantData)
           .then((response) => {
-            /* Navigera här direkt till QR scannern igen */
+           
             console.log(response.data);
           })
           .then(() => {
-            window.location.href = `${homeURL}`;
-
+            window.location.href = `${frontURL}`;
+          
           })
           .catch((error) => {
             console.error(error);
@@ -76,10 +82,11 @@ export default function addParticipant(
     axios
       .post(addURL, participantData)
       .then(() => {
-        window.location.href = `${homeURL}`;
+        window.location.href = `${frontURL}`;
       })
       .catch((error) => {
         console.error(error);
       });
   }
+  
 }
