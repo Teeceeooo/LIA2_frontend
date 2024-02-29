@@ -1,5 +1,4 @@
 import { Button, List, TextField } from "@mui/material";
-import config from "../config.json";
 import axios from "axios";
 import { useState } from "react";
 import Participant from "../interfaces/participantInterface";
