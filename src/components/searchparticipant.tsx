@@ -12,7 +12,9 @@ export default function SearchParticipant() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [comment, setComment] = useState("");
 
-  function fetchParticipants() {
+  const [searchResult, setSearchResult] = useState<Participant[]>([]);
+
+  async function fetchParticipants() {
     if (!(participantId || fullName || phoneNumber || comment)) {
       console.log("Alla fält är tomma, inget händer....");
     } else {
@@ -33,18 +35,12 @@ export default function SearchParticipant() {
         )
         .then((response) => {
           console.log(response.data);
+          setSearchResult(response.data);
         });
     }
   }
   function navigateToParticipantPage(id: string) {
     navigate(`/participant/${id}`);
-  }
-
-  function testFunc() {
-    console.log("ID: ", participantId);
-    console.log("fullName: ", fullName);
-    console.log("phoneNumber: ", phoneNumber);
-    console.log("comment: ", comment);
   }
 
   return (
@@ -83,8 +79,17 @@ export default function SearchParticipant() {
           Sök
         </Button>
       </div>
-
-      <button onClick={testFunc}>TEST</button>
+      <ul className="search-result-container">
+        {searchResult.length > 0 &&
+          searchResult.map((participant, index) => (
+            <li
+              key={index}
+              onClick={() => navigateToParticipantPage(participant.id)}
+            >
+              {participant.fullName} | {participant.id}
+            </li>
+          ))}
+      </ul>
     </>
   );
 }
