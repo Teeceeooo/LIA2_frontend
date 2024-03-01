@@ -10,9 +10,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Createparticipant from "./createparticipant";
+import { getConfig } from "../interfaces/configInterface";
+
 
 
 interface Participant {
+  id: string;
   fullName: string;
   telephoneNumber: string;
   comment: string;
@@ -34,15 +37,19 @@ export default function Participant() {
   const [user, setUser] = useState<Participant | null>(null);
   let { id } = useParams();
   const navigate = useNavigate();
+  const baseURL = `${getConfig().baseURL}`;
+
+  const showParticipantURL = `${baseURL}/api/v1/participants/`;
+  const imgURL = `${baseURL}/api/v1/images/img/`;
 
   
 
-  /* Hämta objektet */
+  
   useEffect(() => {
     getParticipant();
     function getParticipant() {
       axios
-        .get("http://localhost:9090/api/v1/participants/" + id)
+        .get(showParticipantURL + id)
         .then((response) => {
           setUser(response.data);
         });
@@ -56,11 +63,12 @@ export default function Participant() {
   }, [user]);
 
   const [profileImage, setProfileImg] = useState<string | undefined>(undefined);
+ 
   const fetchImage = async () => {
-    setProfileImg(undefined);
+   setProfileImg(undefined);
     try {
       const response = await axios.get(
-        "http://localhost:9090/api/v1/images/img/" + user?.image.imageUrl,
+        imgURL + user?.image.imageUrl,
         {
           responseType: "blob",
         }
@@ -73,15 +81,19 @@ export default function Participant() {
   };
 
   return (
-    <Card sx={{ maxWidth: 500 }}>
+    <Card sx={{ maxWidth: 500 }} className="participant-new-container">
       <CardMedia
         sx={{ height: 140 }}
         image={profileImage || "default-image.png"}
         title="Profile picture"
+        component="a"
+        href={profileImage || "default-image.jpg"}
+        target="_blank"
+        className="profile-image-container"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {user?.fullName}
+          {user?.fullName} | {user?.id}
         </Typography>
 
         <Typography variant="body2" color="text.secondary" className="comment-text">
@@ -108,6 +120,7 @@ export default function Participant() {
   function editParticipant() {
     console.log(user);
     navigate(`/edituser`, { state: { currentUser : user}});
+    console.log(user?.id)
   }
 
 }

@@ -2,12 +2,14 @@ import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import addParticipant from "../api/postparticipantapi";
 import editParticipant from "../api/editparticipantapi";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Participant from "../interfaces/participantInterface";
 import Item from "../interfaces/itemInterface";
 
 export default function Createparticipant() {
   let { id } = useParams<string>();
+
+  const navigate = useNavigate();
 
   const isEdit = window.location.pathname.includes("edituser");
 
@@ -65,6 +67,34 @@ export default function Createparticipant() {
     }
   }
 
+  async function handleEditParticipant() {
+    const editedParticipant: Participant = {
+      id: editUserId,
+      fullName: fullName,
+      telephoneNumber: phoneNumber,
+      image: {
+        imageUrl: imageUrl,
+      },
+      comment: comment,
+      participantItems: currentUser.participantItems,
+    };
+  
+    await editParticipant(editedParticipant, imageFile, imageIsChanged);
+    navigate("/participant/" + editUserId);
+  }
+
+  function handleAddParticipant(){
+    addParticipant(
+      fullName,
+      phoneNumber,
+      comment,
+      imageFile,
+      currentParticipantItems,
+      id || "0"
+    )
+    navigate("/");
+  }
+
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
     if (files && files.length > 0) {
@@ -83,6 +113,7 @@ export default function Createparticipant() {
         accept="image/png, image/jpeg"
         onChange={handleImageUpload}
       />
+      <h3 className="h3-default">Id: {currentUser ? currentUser.id : id}</h3>
       <TextField
         value={fullName}
         id="outlined-multiline-flexible"
@@ -162,38 +193,21 @@ export default function Createparticipant() {
           variant="outlined"
           size="medium"
           onClick={() => {
-            const editedParticipant: Participant = {
-              id: editUserId,
-              fullName: fullName,
-              telephoneNumber: phoneNumber,
-              image: {
-                imageUrl: imageUrl,
-              },
-              comment: comment,
-              participantItems: currentUser.participantItems,
-            };
-            editParticipant(editedParticipant, imageFile, imageIsChanged);
+            handleEditParticipant()
           }}
         >
-          Redigera
+          Spara
         </Button>
       ) : (
         <Button
-          variant="outlined"
-          size="medium"
-          onClick={() =>
-            addParticipant(
-              fullName,
-              phoneNumber,
-              comment,
-              imageFile,
-              currentParticipantItems,
-              id || "0"
-            )
-          }
-        >
-          Skapa
-        </Button>
+        variant="outlined"
+        size="medium"
+        onClick={() =>
+          handleAddParticipant()
+        }
+      >
+        Skapa
+      </Button>
       )}
     </div>
   );

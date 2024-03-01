@@ -13,14 +13,13 @@ import SearchParticipant from "./components/searchparticipant";
 function App() {
   return (
     <>
+    <BrowserRouter>
       <div className="App">
-        <PersistentDrawerLeft />
-        
+      <PersistentDrawerLeft />
         <BrowserRouter>
           <Routes>
-            {/*<Route path="/" element={<QrScanner />} />*/}
+            <Route path="/" element={<QrScanner />} />
             <Route path="/" element={<SearchParticipant />} />
-
             <Route path="/participant/:id" element={<Participant />} />
             <Route
               path="/createparticipant/:id"
@@ -30,16 +29,15 @@ function App() {
               path="/edituser"
               element={<Createparticipant />}
             />
-           {/*  <Route
+           <Route
               path="/searchuser"
               element={<SearchParticipant />}
-            />*/}
+            />
           </Routes>
           <Layout />
         </BrowserRouter>
-        
-      
       </div>
+    </BrowserRouter>
     </>
   );
 }
