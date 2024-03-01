@@ -8,16 +8,19 @@ import Layout from "./components/layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PartyModeOutlined } from "@mui/icons-material";
 import Createparticipant from "./components/createparticipant";
+import SearchParticipant from "./components/searchparticipant";
 
 function App() {
   return (
     <>
     <BrowserRouter>
       <div className="App">
-        <PersistentDrawerLeft />
+      <PersistentDrawerLeft />
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<QrScanner />} />
-            <Route path="/participant/:id" element={<Participant />} /> 
+            <Route path="/" element={<SearchParticipant />} />
+            <Route path="/participant/:id" element={<Participant />} />
             <Route
               path="/createparticipant/:id"
               element={<Createparticipant />}
@@ -26,8 +29,13 @@ function App() {
               path="/edituser"
               element={<Createparticipant />}
             />
+           <Route
+              path="/searchuser"
+              element={<SearchParticipant />}
+            />
           </Routes>
           <Layout />
+        </BrowserRouter>
       </div>
     </BrowserRouter>
     </>

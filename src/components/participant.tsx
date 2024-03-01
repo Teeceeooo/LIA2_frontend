@@ -52,7 +52,6 @@ export default function Participant() {
         .get(showParticipantURL + id)
         .then((response) => {
           setUser(response.data);
-          
         });
     }
   }, []);
@@ -85,7 +84,7 @@ export default function Participant() {
     <Card sx={{ maxWidth: 500 }} className="participant-new-container">
       <CardMedia
         sx={{ height: 140 }}
-        image={profileImage || "default-image.jpg"}
+        image={profileImage || "default-image.png"}
         title="Profile picture"
         component="a"
         href={profileImage || "default-image.jpg"}
