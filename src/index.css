@@ -16,6 +16,22 @@ html body {
 }
 
 /* Sök efter participant komponent */
+.advanced-search-title{
+  font-size: 0.8rem;
+  color:rgb(231, 231, 231);
+  border: rgb(231, 231, 231) solid 1px;
+  padding:5px;
+  cursor: pointer;
+}
+
+.advanced-search-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+}
+
 .search-participant-container {
   display: flex;
   justify-content: center;
@@ -295,6 +311,19 @@ footer p a {
 }
 
 /* IKONER & CONTAINER*/
+
+.search-btn {
+  border: 2px solid white !important;
+  font-family: "Chakra Petch", sans-serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 2px !important;
+  color: white !important;
+  margin-top: 15px !important;
+}
+
+.arrow-icon-search {
+  color:green;
+}
 
 .card-actions-element {
   background-color: rgba(189, 189, 189, 0.493);
