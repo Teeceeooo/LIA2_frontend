@@ -4,12 +4,8 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import Participant from "../interfaces/participantInterface";
 import { useNavigate } from "react-router-dom";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { config, getConfig } from "../interfaces/configInterface";
+
 
 export default function SearchParticipant() {
   const navigate = useNavigate();
@@ -17,8 +13,10 @@ export default function SearchParticipant() {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [comment, setComment] = useState("");
-
   const [searchResult, setSearchResult] = useState<Participant[]>([]);
+
+  const searchApiURL = `${getConfig().baseURL}/api/v1/participants/searchusers`;
+
 
   async function fetchParticipants() {
     if (!(participantId || fullName || phoneNumber || comment)) {
@@ -36,7 +34,7 @@ export default function SearchParticipant() {
       };
       axios
         .post(
-          "http://localhost:9090/api/v1/participants/searchusers",
+          searchApiURL,
           searchData
         )
         .then((response) => {
