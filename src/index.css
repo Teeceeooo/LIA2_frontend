@@ -227,7 +227,7 @@ html body {
 
 
 .profile-image-container {
-  max-height:250px;
+  min-height:45vh;
 }
 
 .css-h93ljk-MuiTypography-root {
