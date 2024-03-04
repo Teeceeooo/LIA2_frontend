@@ -16,10 +16,8 @@ function App() {
     <BrowserRouter>
       <div className="App">
       <PersistentDrawerLeft />
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<QrScanner />} />
-            <Route path="/" element={<SearchParticipant />} />
             <Route path="/participant/:id" element={<Participant />} />
             <Route
               path="/createparticipant/:id"
@@ -34,8 +32,7 @@ function App() {
               element={<SearchParticipant />}
             />
           </Routes>
-          <Layout />
-        </BrowserRouter>
+          <Layout /> 
       </div>
     </BrowserRouter>
     </>

@@ -1,8 +1,15 @@
+import * as React from 'react';
 import { Button, List, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Participant from "../interfaces/participantInterface";
 import { useNavigate } from "react-router-dom";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export default function SearchParticipant() {
   const navigate = useNavigate();
@@ -38,6 +45,14 @@ export default function SearchParticipant() {
         });
     }
   }
+
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleAdvancedSearch = () => {
+    setIsVisible(!isVisible);
+  };
+
+  
+
   function navigateToParticipantPage(id: string) {
     navigate(`/participant/${id}`);
   }
@@ -60,21 +75,28 @@ export default function SearchParticipant() {
           maxRows={1}
           onChange={(e) => setFullName(e.target.value)}
         />
-        <TextField
+
+        <h3 onClick={toggleAdvancedSearch} className='advanced-search-title'>- Avancerad Sök -</h3>
+        {isVisible && (
+        <div className='advanced-search-container' id="advanced-search">
+         <TextField
           id="outlined-multiline-flexible"
           label="Telefonnummer"
           multiline
           maxRows={1}
           onChange={(e) => setPhoneNumber(e.target.value)}
-        />
+          />
         <TextField
           id="outlined-multiline-flexible"
           label="Kommentar"
           multiline
           maxRows={4}
           onChange={(e) => setComment(e.target.value)}
-        />
-        <Button variant="outlined" size="medium" onClick={fetchParticipants}>
+        />  
+       </div> 
+       )}  
+
+        <Button variant="outlined" size="medium" className="search-btn" onClick={fetchParticipants}>
           Sök
         </Button>
       </div>
@@ -90,5 +112,9 @@ export default function SearchParticipant() {
           ))}
       </ul>
     </>
+
+    
   );
+
+
 }
