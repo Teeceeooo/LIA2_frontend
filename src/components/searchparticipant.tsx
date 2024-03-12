@@ -13,6 +13,9 @@ export default function SearchParticipant() {
 
   const [searchResult, setSearchResult] = useState<Participant[]>([]);
 
+  const username = sessionStorage.getItem('username');
+  const password = sessionStorage.getItem('password');
+
   async function fetchParticipants() {
     if (!(participantId || fullName || phoneNumber || comment)) {
       console.log("Alla fält är tomma, inget händer....");

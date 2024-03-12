@@ -12,8 +12,6 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Createparticipant from "./createparticipant";
 import { getConfig } from "../interfaces/configInterface";
 
-
-
 interface Participant {
   id: string;
   fullName: string;
@@ -47,14 +45,30 @@ export default function Participant() {
   
   useEffect(() => {
     getParticipant();
-    function getParticipant() {
-      axios
-        .get(showParticipantURL + id)
-        .then((response) => {
-          setUser(response.data);
-        });
+    
+    async function getParticipant() {
+      try {
+        const username = sessionStorage.getItem('username');
+        const password = sessionStorage.getItem('password');
+        if (!username || !password) {
+          throw new Error('Username or password not found in sessionStorage');
+        }
+  
+        const response = await axios.get(
+          showParticipantURL + id,
+          {
+            headers: {
+              Authorization: `Basic ${btoa(`${username}:${password}`)}`
+            }
+          }
+        );
+        setUser(response.data);
+      } catch (error) {
+        console.error("An error occurred while fetching participant data: ", error);
+      }
     }
   }, []);
+  
 
   useEffect(() => {
     if (user) {
@@ -65,20 +79,30 @@ export default function Participant() {
   const [profileImage, setProfileImg] = useState<string | undefined>(undefined);
  
   const fetchImage = async () => {
-   setProfileImg(undefined);
+    setProfileImg(undefined);
     try {
+      const username = sessionStorage.getItem('username');
+      const password = sessionStorage.getItem('password');
+      if (!username || !password) {
+        throw new Error('Username or password not found in sessionStorage');
+      }
+  
       const response = await axios.get(
         imgURL + user?.image.imageUrl,
         {
           responseType: "blob",
+          headers: {
+            Authorization: `Basic ${btoa(`${username}:${password}`)}`
+          }
         }
       );
       const profilePicture = URL.createObjectURL(response.data);
       setProfileImg(profilePicture);
     } catch (error) {
-      console.error("Något gick fel: ", error);
+      console.error("An error occurred: ", error);
     }
   };
+  
 
   return (
     <Card sx={{ maxWidth: 500 }} className="participant-new-container">

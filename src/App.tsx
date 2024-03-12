@@ -1,44 +1,46 @@
-import React from "react";
-import "./App.css";
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PersistentDrawerLeft from "./components/mainmenu";
 import QrScanner from "./components/qrscanner";
 import Participant from "./components/participant";
 import Footer from "./components/footer";
 import Layout from "./components/layout";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PartyModeOutlined } from "@mui/icons-material";
 import Createparticipant from "./components/createparticipant";
 import SearchParticipant from "./components/searchparticipant";
+import Login from "./components/login";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // Perform authentication process here, and set isLoggedIn to true if successful
+    setIsLoggedIn(true);
+  };
+
   return (
-    <>
     <BrowserRouter>
       <div className="App">
-      <PersistentDrawerLeft />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<QrScanner />} />
-            <Route path="/" element={<SearchParticipant />} />
-            <Route path="/participant/:id" element={<Participant />} />
-            <Route
-              path="/createparticipant/:id"
-              element={<Createparticipant />}
-            />
-            <Route
-              path="/edituser"
-              element={<Createparticipant />}
-            />
-           <Route
-              path="/searchuser"
-              element={<SearchParticipant />}
-            />
-          </Routes>
-          <Layout />
-        </BrowserRouter>
+        <PersistentDrawerLeft />
+        <Routes>
+          {/* Redirect to login if not logged in */}
+          {!isLoggedIn && <Route path="/" element={<Login onLogin={handleLogin} />} />} {/* Pass the callback function to LoginForm */}
+          {/* Main routes accessible only when logged in */}
+          {isLoggedIn && (
+            <>
+              <Route path="/" element={<QrScanner />} />
+              <Route path="/participant/:id" element={<Participant />} />
+              <Route path="/createparticipant/:id" element={<Createparticipant />} />
+              <Route path="/edituser" element={<Createparticipant />} />
+              <Route path="/searchuser" element={<SearchParticipant />} />
+            </>
+          )}
+          {/* Redirect to home if already logged in */}
+          {isLoggedIn && <Route path="/login" element={<Navigate to="/" />} />}
+        </Routes>
+        <Layout />
       </div>
     </BrowserRouter>
-    </>
   );
 }
 
