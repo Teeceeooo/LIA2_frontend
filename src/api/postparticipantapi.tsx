@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import Item from "../interfaces/itemInterface";
 import { getConfig } from "../interfaces/configInterface";
 
-
 export default function addParticipant(
   fullName: string | null,
   phoneNumber: string | null,
@@ -12,12 +11,9 @@ export default function addParticipant(
   currentParticipantItems: Item[],
   qrid: string
 ) {
-
   const baseURL = getConfig().baseURL;
   const frontURL = getConfig().frontBaseURL;
 
-  
-  
   const addURL = `${baseURL}/api/v1/participants/add`;
   const uploadURL = `${baseURL}/api/v1/images/upload`;
   const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
@@ -64,12 +60,10 @@ export default function addParticipant(
         axios
           .post(addURL, participantData)
           .then((response) => {
-           
             console.log(response.data);
           })
           .then(() => {
             window.location.href = `${frontURL}`;
-          
           })
           .catch((error) => {
             console.error(error);
@@ -88,5 +82,4 @@ export default function addParticipant(
         console.error(error);
       });
   }
-  
 }

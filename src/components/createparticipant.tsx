@@ -78,12 +78,12 @@ export default function Createparticipant() {
       comment: comment,
       participantItems: currentUser.participantItems,
     };
-  
+
     await editParticipant(editedParticipant, imageFile, imageIsChanged);
     navigate("/participant/" + editUserId);
   }
 
-  function handleAddParticipant(){
+  function handleAddParticipant() {
     addParticipant(
       fullName,
       phoneNumber,
@@ -91,7 +91,7 @@ export default function Createparticipant() {
       imageFile,
       currentParticipantItems,
       id || "0"
-    )
+    );
     navigate("/");
   }
 
@@ -193,21 +193,19 @@ export default function Createparticipant() {
           variant="outlined"
           size="medium"
           onClick={() => {
-            handleEditParticipant()
+            handleEditParticipant();
           }}
         >
           Spara
         </Button>
       ) : (
         <Button
-        variant="outlined"
-        size="medium"
-        onClick={() =>
-          handleAddParticipant()
-        }
-      >
-        Skapa
-      </Button>
+          variant="outlined"
+          size="medium"
+          onClick={() => handleAddParticipant()}
+        >
+          Skapa
+        </Button>
       )}
     </div>
   );

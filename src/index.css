@@ -6,35 +6,89 @@
 
 html body {
   z-index: -1;
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 29%, rgba(53,53,92,1) 100%, rgba(0,212,255,1) 98%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 29%,
+    rgba(53, 53, 92, 1) 100%,
+    rgba(0, 212, 255, 1) 98%
+  );
 }
+
+/* Log vy */
+.log-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.log-heading {
+  font-family: "Chakra Petch", sans-serif;
+  font-size: 1.3rem;
+  color: white;
+}
+
+.log-container ul {
+  width: 80%;
+  border: solid #333 1px;
+  overflow: auto;
+  max-height: 60vh;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.185);
+  line-height: 3;
+  font-size: 1rem;
+  color: white;
+  margin-top: 5%;
+}
+
+.log-container ul li:nth-child(odd) {
+  background-color: rgba(245, 245, 245, 0.329);
+}
+
+.log-container ul li:nth-child(even) {
+  background-color: rgba(245, 245, 245, 0.103);
+}
+
+.load-logs-btns {
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+}
+
+.btn-log {
+  color: white;
+  margin: 60px;
+  background-color: rgb(71, 71, 71);
+  border-radius: 50%;
+}
+
 /* Skapa ny participant komponent */
-.MuiFormControl-root  {
-  width:85%;
-  margin-top:10px !important;
-  margin-bottom:10px !important;
-  border:1px white solid !important;
-  color:white !important;
+.MuiFormControl-root {
+  width: 85%;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  border: 1px white solid !important;
+  color: white !important;
   border-radius: 5px !important;
   font-family: "Chakra Petch", sans-serif !important;
 }
 
 #outlined-multiline-flexible {
-  color:white;
+  color: white;
   font-family: "Chakra Petch", sans-serif;
 }
 
 /* Placeholder text för label */
-.MuiFormControl-root label  {
-  color:white;
+.MuiFormControl-root label {
+  color: white;
   font-family: "Chakra Petch", sans-serif;
 }
 
 #add-to-list-container {
-  display:flex;
+  display: flex;
   flex-direction: row;
-  max-width:85%;
+  max-width: 85%;
   text-align: center;
 }
 
@@ -43,43 +97,43 @@ html body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px; 
-  height: 50px; 
+  width: 50px;
+  height: 50px;
   font-size: 20px;
-  color:white; 
+  color: white;
   background-color: transparent;
   border-radius: 5px;
-  margin-left:30px;
-  padding:20px;
-  margin-top:12px;
+  margin-left: 30px;
+  padding: 20px;
+  margin-top: 12px;
   border: white solid 1px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
 }
 
 /* Huvud container för hela create participant */
 .container-create-participant {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-self: center;
   align-items: center;
- }
+}
 
- /* Knappen "Skapa" i createparticipant */
- .container-create-participant .MuiButton-outlined {
-  border:2px solid white;
+/* Knappen "Skapa" i createparticipant */
+.container-create-participant .MuiButton-outlined {
+  border: 2px solid white;
   font-family: "Chakra Petch", sans-serif;
   font-size: 1.2rem;
   letter-spacing: 2px;
-  color:white;
-  margin-top:30px;
- } 
+  color: white;
+  margin-top: 30px;
+}
 
- /* Container för tillagda items i create participant */
+/* Container för tillagda items i create participant */
 .add-item-container {
   display: flex;
   flex-direction: row;
   width: 75%;
-  overflow:scroll;
+  overflow: scroll;
 }
 
 .list-item-post {
@@ -91,33 +145,31 @@ html body {
 
 /* Knappen för att ta bort items ur listan i create participant */
 .remove-btn {
-    background: #FF4742;
-    border: 1px solid #FF4742;
-    border-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline-block;
-    font-family: "Chakra Petch", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
-    line-height: 16px;
-    min-height: 40px;
-    outline: 0;
-    width:50px;
-    padding: 12px 14px;
-    text-align: center;
-    text-rendering: geometricprecision;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: middle;
-  }
-  
-
+  background: #ff4742;
+  border: 1px solid #ff4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  width: 50px;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
 
 .remove-btn:hover {
   background-color: rgb(255, 45, 45);
@@ -132,8 +184,8 @@ html body {
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.185);
   line-height: 3;
   font-size: 1.2rem;
-  color:white;
-  margin-top:5%;
+  color: white;
+  margin-top: 5%;
 }
 
 .participant-list-post li:nth-child(odd) {
@@ -144,8 +196,6 @@ html body {
   background-color: rgba(245, 245, 245, 0.103);
 }
 
-
-
 /* Participant komponent */
 .participant-new-container {
   width: 90%;
@@ -155,9 +205,8 @@ html body {
 }
 
 .profile-image-container {
-  max-height:20px;
+  max-height: 20px;
 }
-
 
 .css-h93ljk-MuiTypography-root {
   text-align: center;
@@ -237,7 +286,6 @@ footer p a {
   color: white;
   background-color: #1976d2;
   font-size: 1.2rem;
-  
 }
 
 /* IKONER & CONTAINER*/
@@ -247,33 +295,32 @@ footer p a {
 }
 
 .icon-container {
-  display:flex;
-  width:100%;
+  display: flex;
+  width: 100%;
   justify-content: space-evenly;
-  padding:5px;
+  padding: 5px;
 }
 
-.phone-icon, .edit-icon {
-  font-size:2rem !important;
+.phone-icon,
+.edit-icon {
+  font-size: 2rem !important;
   color: rgb(96, 96, 165);
 }
 
 .image-button {
-  color:white;
+  color: white;
   font-family: "Chakra Petch", sans-serif;
   font-size: 1rem;
   letter-spacing: 2px;
   background-color: transparent;
   text-align: center;
-  margin-bottom:5%;
+  margin-bottom: 5%;
 }
 .h3-default {
-  color:white;
+  color: white;
   font-family: "Chakra Petch", sans-serif;
   font-size: 1.2rem;
   letter-spacing: 2px;
   background-color: transparent;
   text-align: center;
 }
-
-
