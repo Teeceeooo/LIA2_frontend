@@ -1,8 +1,11 @@
+import * as React from 'react';
 import { Button, List, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Participant from "../interfaces/participantInterface";
 import { useNavigate } from "react-router-dom";
+import { config, getConfig } from "../interfaces/configInterface";
+
 
 export default function SearchParticipant() {
   const navigate = useNavigate();
@@ -10,11 +13,12 @@ export default function SearchParticipant() {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [comment, setComment] = useState("");
-
   const [searchResult, setSearchResult] = useState<Participant[]>([]);
 
   const username = sessionStorage.getItem('username');
   const password = sessionStorage.getItem('password');
+  const searchApiURL = `${getConfig().baseURL}/api/v1/participants/searchusers`;
+
 
   async function fetchParticipants() {
     if (!(participantId || fullName || phoneNumber || comment)) {
@@ -25,14 +29,10 @@ export default function SearchParticipant() {
         fullName: fullName || null,
         telephoneNumber: phoneNumber || null,
         comment: comment || null,
-        image: {
-          imageUrl: "",
-        },
-        participantItems: [],
       };
       axios
         .post(
-          "http://localhost:9090/api/v1/participants/searchusers",
+          searchApiURL,
           searchData
         )
         .then((response) => {
@@ -41,6 +41,14 @@ export default function SearchParticipant() {
         });
     }
   }
+
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleAdvancedSearch = () => {
+    setIsVisible(!isVisible);
+  };
+
+  
+
   function navigateToParticipantPage(id: string) {
     navigate(`/participant/${id}`);
   }
@@ -63,21 +71,28 @@ export default function SearchParticipant() {
           maxRows={1}
           onChange={(e) => setFullName(e.target.value)}
         />
-        <TextField
+
+        <h3 onClick={toggleAdvancedSearch} className='advanced-search-title'>- Avancerad Sök -</h3>
+        {isVisible && (
+        <div className='advanced-search-container' id="advanced-search">
+         <TextField
           id="outlined-multiline-flexible"
           label="Telefonnummer"
           multiline
           maxRows={1}
           onChange={(e) => setPhoneNumber(e.target.value)}
-        />
+          />
         <TextField
           id="outlined-multiline-flexible"
           label="Kommentar"
           multiline
           maxRows={4}
           onChange={(e) => setComment(e.target.value)}
-        />
-        <Button variant="outlined" size="medium" onClick={fetchParticipants}>
+        />  
+       </div> 
+       )}  
+
+        <Button variant="outlined" size="medium" className="search-btn" onClick={fetchParticipants}>
           Sök
         </Button>
       </div>
@@ -93,5 +108,9 @@ export default function SearchParticipant() {
           ))}
       </ul>
     </>
+
+    
   );
+
+
 }
