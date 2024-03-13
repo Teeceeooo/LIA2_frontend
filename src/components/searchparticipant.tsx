@@ -27,10 +27,6 @@ export default function SearchParticipant() {
         fullName: fullName || null,
         telephoneNumber: phoneNumber || null,
         comment: comment || null,
-        image: {
-          imageUrl: "",
-        },
-        participantItems: [],
       };
       axios
         .post(
