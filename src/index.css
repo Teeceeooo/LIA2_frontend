@@ -13,6 +13,7 @@ html body {
     rgba(53, 53, 92, 1) 100%,
     rgba(0, 212, 255, 1) 98%
   );
+
 }
 
 /* Log vy */
@@ -61,6 +62,75 @@ html body {
   margin: 60px;
   background-color: rgb(71, 71, 71);
   border-radius: 50%;
+=======
+}
+
+/* Sök efter participant komponent */
+.advanced-search-title{
+  font-size: 0.8rem;
+  color:rgb(231, 231, 231);
+  border: rgb(231, 231, 231) solid 1px;
+  padding:5px;
+  cursor: pointer;
+}
+
+.advanced-search-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+}
+
+.search-participant-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-result-container {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 35vh;
+  margin-top: 5%;
+  border-radius: 3%;
+}
+
+.search-result-container li {
+  color: white;
+  font-size: 1.2rem;
+  font-family: "Chakra Petch", sans-serif;
+  text-align: center;
+  padding: 10px;
+}
+
+.search-result-container li:nth-child(odd) {
+  background-color: rgba(245, 245, 245, 0.329);
+}
+
+.search-result-container li:nth-child(even) {
+  background-color: rgba(245, 245, 245, 0.103);
+}
+
+.search-participant-container h2 {
+  color: white;
+  font-size: 1.4rem;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+.search-participant-container li {
+  font-size: 0.9rem;
+  font-family: "Chakra Petch", sans-serif;
+  justify-content: center;
+}
+
+.search-participant-container ul {
+  margin-top: 0;
 }
 
 /* Skapa ny participant komponent */
@@ -205,7 +275,7 @@ html body {
 }
 
 .profile-image-container {
-  max-height: 20px;
+  min-height:45vh;
 }
 
 .css-h93ljk-MuiTypography-root {
@@ -306,6 +376,19 @@ footer p a {
 
 /* IKONER & CONTAINER*/
 
+.search-btn {
+  border: 2px solid white !important;
+  font-family: "Chakra Petch", sans-serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 2px !important;
+  color: white !important;
+  margin-top: 15px !important;
+}
+
+.arrow-icon-search {
+  color:green;
+}
+
 .card-actions-element {
   background-color: rgba(189, 189, 189, 0.493);
 }
@@ -332,6 +415,7 @@ footer p a {
   text-align: center;
   margin-bottom: 5%;
 }
+
 .h3-default {
   color: white;
   font-family: "Chakra Petch", sans-serif;

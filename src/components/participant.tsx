@@ -37,7 +37,7 @@ export default function Participant() {
   useEffect(() => {
     getParticipant();
   }, []);
-    
+     
   function getParticipant() {
     axios.get(showParticipantURL + idParam).then((response) => {
       setUser(response.data);
@@ -76,6 +76,7 @@ export default function Participant() {
       console.log("Det gick inte att lägga till log");
     }
   };
+
 
   async function handleCheckOut() {
     if (idParam) {
