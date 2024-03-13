@@ -39,7 +39,15 @@ export default function Participant() {
   }, []);
      
   function getParticipant() {
-    axios.get(showParticipantURL + idParam).then((response) => {
+    const username = sessionStorage.getItem('username');
+    const password = sessionStorage.getItem('password');
+    axios.get(showParticipantURL + idParam,
+          {
+            headers: {
+              Authorization: `Basic ${btoa(`${username}:${password}`)}`
+            }
+          }
+             ).then((response) => {
       setUser(response.data);
     });
   }
@@ -68,6 +76,7 @@ export default function Participant() {
     }
   }
 
+
   async function handleCheckIn() {
     if (idParam) {
       await checkInParticipant(idParam);
@@ -76,6 +85,7 @@ export default function Participant() {
       console.log("Det gick inte att lägga till log");
     }
   };
+  
 
 
   async function handleCheckOut() {

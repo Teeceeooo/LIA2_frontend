@@ -15,6 +15,8 @@ export default function SearchParticipant() {
   const [comment, setComment] = useState("");
   const [searchResult, setSearchResult] = useState<Participant[]>([]);
 
+  const username = sessionStorage.getItem('username');
+  const password = sessionStorage.getItem('password');
   const searchApiURL = `${getConfig().baseURL}/api/v1/participants/searchusers`;
 
 
