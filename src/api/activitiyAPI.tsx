@@ -23,6 +23,7 @@ export async function checkInParticipant(currentUserId: string) {
       })
       .then((response) => {
         console.log("Aktiviteten postades: ", response.data);
+        return response.data;
       });
   } catch (error) {
     console.log(error);

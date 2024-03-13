@@ -30,98 +30,35 @@ export default function Participant() {
     typeOfActivity: "CHECKED_OUT",
     timeOfActivity: "1970-01-01",
   });
-  const [asd, setAsd] = useState<string>("");
 
   const showParticipantURL = `${baseURL}/api/v1/participants/`;
   const imgURL = `${baseURL}/api/v1/images/img/`;
 
   useEffect(() => {
-    console.log("Denna körs, varför uppdateras inte denna komponent...?");
-  }, [asd]);
-
-  const handleCheckIn = async () => {
-    if (idParam) {
-      await checkInParticipant(idParam);
-      setAsd("fghhfghgffhg!");
-    } else {
-      console.log("IdParam är tomt.");
-    }
-  };
-
-  const handleCheckOut = async () => {
-    if (idParam) {
-      await checkOutParticipant(idParam);
-      setAsd("fdgfdgfdggfdfdggfdfdg!");
-    } else {
-      console.log("IdParam är tomt.");
-    }
-  };
-
-  const handleLeaving = async () => {
-    if (idParam) {
-      await leavingParticipant(idParam);
-      setAsd("dfgdfgfdgfdg!");
-    } else {
-      console.log("IdParam är tomt.");
-    }
-  };
-
-  const handleReturning = async () => {
-    if (idParam) {
-      await returningParticipant(idParam);
-      setAsd("sdffsdsdf!");
-    } else {
-      console.log("IdParam är tomt.");
-    }
-  };
-
-  useEffect(() => {
     getParticipant();
-    function getParticipant() {
-      axios.get(showParticipantURL + idParam).then((response) => {
-        setUser(response.data);
-      });
-    }
   }, []);
+    
+  function getParticipant() {
+    axios.get(showParticipantURL + idParam).then((response) => {
+      setUser(response.data);
+    });
+  }
 
-  useEffect(() => {
-    checkCurrentParticipantStatus();
-    function checkCurrentParticipantStatus() {
-      axios
-        .get(`http://localhost:9090/api/v1/activity/getLatest/${idParam}`)
-        .then((response) => {
-          setLatestLog(response.data);
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log("Det finns inga logs för denna användare...");
-          } else {
-            console.error(error);
-          }
-        });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      fetchImage();
-    }
-  }, [user]);
-
-  const [profileImage, setProfileImg] = useState<string | undefined>(undefined);
-
-  const fetchImage = async () => {
-    setProfileImg(undefined);
-    try {
-      const response = await axios.get(imgURL + user?.image.imageUrl, {
-        responseType: "blob",
+  function checkCurrentParticipantStatus() {
+    axios
+      .get(`${baseURL}/api/v1/activity/getLatest/${idParam}`)
+      .then((response) => {
+        setLatestLog(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log("Det finns inga logs för denna användare...");
+        } else {
+          console.error(error);
+        }
       });
-      const profilePicture = URL.createObjectURL(response.data);
-      setProfileImg(profilePicture);
-    } catch (error) {
-      console.error("Något gick fel: ", error);
-    }
-  };
+    }    
+
 
   function navigateToLog() {
     if (user && user.id) {
@@ -131,15 +68,51 @@ export default function Participant() {
     }
   }
 
+  async function handleCheckIn() {
+    if (idParam) {
+      await checkInParticipant(idParam);
+      checkCurrentParticipantStatus();
+    } else {
+      console.log("Det gick inte att lägga till log");
+    }
+  };
+
+  async function handleCheckOut() {
+    if (idParam) {
+      await checkOutParticipant(idParam);
+      checkCurrentParticipantStatus();
+    } else {
+      console.log("Det gick inte att lägga till log");
+    }
+  };
+
+  async function handleLeaving() {
+    if (idParam) {
+      await leavingParticipant(idParam);
+      checkCurrentParticipantStatus();
+    } else {
+      console.log("Det gick inte att lägga till log");
+    }
+  };
+
+  async function handleReturning() {
+    if (idParam) {
+      await returningParticipant(idParam);
+      checkCurrentParticipantStatus();
+    } else {
+      console.log("Det gick inte att lägga till log");
+    }
+  };
+
   return (
     <>
       <Card sx={{ maxWidth: 500 }} className="participant-new-container">
         <CardMedia
           sx={{ height: 140 }}
-          image={profileImage || "default-image.jpg"}
+          image={user?.image.imageUrl ? imgURL + user?.image.imageUrl : imgURL + "default-image.jpg"}
           title="Profile picture"
           component="a"
-          href={profileImage || "default-image.jpg"}
+          href={user?.image.imageUrl ? imgURL + user?.image.imageUrl : imgURL + "default-image.jpg"}
           target="_blank"
           className="profile-image-container"
         />
@@ -172,7 +145,7 @@ export default function Participant() {
           </div>
         </CardActions>
       </Card>
-      <div>
+      <div className="btns-for-logs">
         {latestLog?.typeOfActivity === "CHECKED_IN" && (
           <>
             <button onClick={handleCheckOut}>CHECKA UT</button>
@@ -185,7 +158,6 @@ export default function Participant() {
         {latestLog?.typeOfActivity === "LEFT_THE_BUILDING" && (
           <>
             <button onClick={handleReturning}>Går in i byggnaden</button>
-            <button onClick={handleCheckOut}>Checka ut</button>
           </>
         )}
         {latestLog?.typeOfActivity === "ENTERED_THE_BUILDING" && (

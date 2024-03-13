@@ -235,6 +235,22 @@ html body {
   text-align: center;
 }
 
+.btns-for-logs{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.btns-for-logs button{
+  border: 1px solid white;
+  font-family: "Chakra Petch", sans-serif;
+  background-color:transparent;
+  color:white;
+  padding:10px;
+  margin:5px;
+  font-weight: 800;
+}
+
 /* Footer */
 footer {
   background-color: #1976d2;

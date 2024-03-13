@@ -92,6 +92,7 @@ export default function Createparticipant() {
       currentParticipantItems,
       id || "0"
     );
+    console.log("INNAN HOME NAVIGATE")
     navigate("/");
   }
 

@@ -62,9 +62,6 @@ export default function addParticipant(
           .then((response) => {
             console.log(response.data);
           })
-          .then(() => {
-            window.location.href = `${frontURL}`;
-          })
           .catch((error) => {
             console.error(error);
           });
@@ -75,9 +72,6 @@ export default function addParticipant(
   } else {
     axios
       .post(addURL, participantData)
-      .then(() => {
-        window.location.href = `${frontURL}`;
-      })
       .catch((error) => {
         console.error(error);
       });

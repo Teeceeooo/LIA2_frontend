@@ -45,8 +45,7 @@ export default function Logview() {
       >
         {logData.map((activity: Activity, index: number) => (
           <li className="list-item-post" key={activity.id}>
-            {activity.id} | {activity.typeOfActivity} |{" "}
-            {activity.timeOfActivity}
+            {activity.typeOfActivity} | {activity.timeOfActivity}
           </li>
         ))}
       </ul>
