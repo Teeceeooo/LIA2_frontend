@@ -14,6 +14,9 @@ export default function addParticipant(
   const baseURL = getConfig().baseURL;
   const frontURL = getConfig().frontBaseURL;
 
+  const username = sessionStorage.getItem('username');
+  const password = sessionStorage.getItem('password');
+
   const addURL = `${baseURL}/api/v1/participants/add`;
   const uploadURL = `${baseURL}/api/v1/images/upload`;
   const qridNumber = qrid ? parseInt(qrid, 10) : undefined;
@@ -40,6 +43,7 @@ export default function addParticipant(
     axios
       .post(uploadURL, formData, {
         headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
           "Content-Type": "multipart/form-data",
         },
       })
@@ -58,7 +62,11 @@ export default function addParticipant(
           },
         };
         axios
-          .post(addURL, participantData)
+          .post(addURL, participantData, {
+            headers: {
+              Authorization: `Basic ${btoa(`${username}:${password}`)}`
+            },
+          })
           .then((response) => {
             console.log(response.data);
           })
@@ -71,7 +79,11 @@ export default function addParticipant(
       });
   } else {
     axios
-      .post(addURL, participantData)
+      .post(addURL, participantData, {
+        headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`
+        },
+      })
       .catch((error) => {
         console.error(error);
       });

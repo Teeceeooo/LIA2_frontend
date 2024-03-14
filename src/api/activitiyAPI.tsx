@@ -3,6 +3,9 @@ import { getConfig } from "../interfaces/configInterface";
 import Activity, { TypeOfActivity } from "../interfaces/activityInterface";
 import Participant from "../interfaces/participantInterface";
 
+const username = sessionStorage.getItem('username');
+const password = sessionStorage.getItem('password');
+
 export async function checkInParticipant(currentUserId: string) {
   try {
     const config = await getConfig();
@@ -18,6 +21,7 @@ export async function checkInParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
           "Content-Type": "application/json",
         },
       })
@@ -45,6 +49,7 @@ export async function checkOutParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
           "Content-Type": "application/json",
         },
       })
@@ -71,6 +76,7 @@ export async function leavingParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
           "Content-Type": "application/json",
         },
       })
@@ -97,6 +103,7 @@ export async function returningParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
           "Content-Type": "application/json",
         },
       })

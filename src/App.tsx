@@ -5,7 +5,6 @@ import QrScanner from "./components/qrscanner";
 import Participant from "./components/participant";
 import Layout from "./components/layout";
 import { PartyModeOutlined } from "@mui/icons-material";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Createparticipant from "./components/createparticipant";
 import Logview from "./components/logview";
 import SearchParticipant from "./components/searchparticipant";
@@ -16,7 +15,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => {
-    // Perform authentication process here, and set isLoggedIn to true if successful
     setIsLoggedIn(true);
   };
 
@@ -26,9 +24,7 @@ function App() {
         
         <PersistentDrawerLeft />
         <Routes>
-          {/* Redirect to login if not logged in */}
-          {!isLoggedIn && <Route path="/" element={<Login onLogin={handleLogin} />} />} {/* Pass the callback function to LoginForm */}
-          {/* Main routes accessible only when logged in */}
+          {!isLoggedIn && <Route path="/" element={<Login onLogin={handleLogin} />} />}
           {isLoggedIn && (
             <>
               <Route path="/" element={<QrScanner />} />
@@ -39,7 +35,6 @@ function App() {
               <Route path="/searchuser" element={<SearchParticipant />} />
             </>
           )}
-          {/* Redirect to home if already logged in */}
           {isLoggedIn && <Route path="/login" element={<Navigate to="/" />} />}
         </Routes>
         <Layout />

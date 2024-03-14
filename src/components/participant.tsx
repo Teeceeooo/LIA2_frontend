@@ -20,6 +20,9 @@ import {
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Log from "../interfaces/logInterface";
 
+const username = sessionStorage.getItem('username');
+const password = sessionStorage.getItem('password');
+
 export default function Participant() {
   const [user, setUser] = useState<ParticipantInterface | null>(null);
   let { id: idParam } = useParams();
@@ -39,8 +42,6 @@ export default function Participant() {
   }, []);
      
   function getParticipant() {
-    const username = sessionStorage.getItem('username');
-    const password = sessionStorage.getItem('password');
     axios.get(showParticipantURL + idParam,
           {
             headers: {
@@ -54,7 +55,11 @@ export default function Participant() {
 
   function checkCurrentParticipantStatus() {
     axios
-      .get(`${baseURL}/api/v1/activity/getLatest/${idParam}`)
+      .get(`${baseURL}/api/v1/activity/getLatest/${idParam}`, {
+        headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`
+        },
+      })
       .then((response) => {
         setLatestLog(response.data);
       })

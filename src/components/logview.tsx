@@ -6,6 +6,9 @@ import { useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+const username = sessionStorage.getItem('username');
+const password = sessionStorage.getItem('password');
+
 export default function Logview() {
   const [logData, setLogData] = useState<Activity[]>([]);
   const [pageSize, setPageSize] = useState(10);
@@ -17,7 +20,11 @@ export default function Logview() {
 
   useEffect(() => {
     axios
-      .get(findLogs)
+      .get(findLogs, {
+        headers: { 
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          "Content-Type": "application/json",
+        }},)
       .then((response) => {
         setLogData(response.data);
         console.log(logData);
