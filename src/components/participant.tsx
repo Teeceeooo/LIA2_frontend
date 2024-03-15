@@ -20,8 +20,8 @@ import {
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Log from "../interfaces/logInterface";
 
-const username = sessionStorage.getItem('username');
-const password = sessionStorage.getItem('password');
+const username = sessionStorage.getItem("username");
+const password = sessionStorage.getItem("password");
 
 export default function Participant() {
   const [user, setUser] = useState<ParticipantInterface | null>(null);
@@ -40,24 +40,24 @@ export default function Participant() {
   useEffect(() => {
     getParticipant();
   }, []);
-     
+
   function getParticipant() {
-    axios.get(showParticipantURL + idParam,
-          {
-            headers: {
-              Authorization: `Basic ${btoa(`${username}:${password}`)}`
-            }
-          }
-             ).then((response) => {
-      setUser(response.data);
-    });
+    axios
+      .get(showParticipantURL + idParam, {
+        headers: {
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        },
+      })
+      .then((response) => {
+        setUser(response.data);
+      });
   }
 
   function checkCurrentParticipantStatus() {
     axios
       .get(`${baseURL}/api/v1/activity/getLatest/${idParam}`, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
         },
       })
       .then((response) => {
@@ -70,8 +70,7 @@ export default function Participant() {
           console.error(error);
         }
       });
-    }    
-
+  }
 
   function navigateToLog() {
     if (user && user.id) {
@@ -81,7 +80,6 @@ export default function Participant() {
     }
   }
 
-
   async function handleCheckIn() {
     if (idParam) {
       await checkInParticipant(idParam);
@@ -89,9 +87,7 @@ export default function Participant() {
     } else {
       console.log("Det gick inte att lägga till log");
     }
-  };
-  
-
+  }
 
   async function handleCheckOut() {
     if (idParam) {
@@ -100,7 +96,7 @@ export default function Participant() {
     } else {
       console.log("Det gick inte att lägga till log");
     }
-  };
+  }
 
   async function handleLeaving() {
     if (idParam) {
@@ -109,7 +105,7 @@ export default function Participant() {
     } else {
       console.log("Det gick inte att lägga till log");
     }
-  };
+  }
 
   async function handleReturning() {
     if (idParam) {
@@ -118,17 +114,25 @@ export default function Participant() {
     } else {
       console.log("Det gick inte att lägga till log");
     }
-  };
+  }
 
   return (
     <>
       <Card sx={{ maxWidth: 500 }} className="participant-new-container">
         <CardMedia
           sx={{ height: 140 }}
-          image={user?.image.imageUrl ? imgURL + user?.image.imageUrl : imgURL + "default-image.jpg"}
+          image={
+            user?.image.imageUrl
+              ? imgURL + user?.image.imageUrl
+              : imgURL + "default-image.jpg"
+          }
           title="Profile picture"
           component="a"
-          href={user?.image.imageUrl ? imgURL + user?.image.imageUrl : imgURL + "default-image.jpg"}
+          href={
+            user?.image.imageUrl
+              ? imgURL + user?.image.imageUrl
+              : imgURL + "default-image.jpg"
+          }
           target="_blank"
           className="profile-image-container"
         />

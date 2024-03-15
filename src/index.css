@@ -13,7 +13,37 @@ html body {
     rgba(53, 53, 92, 1) 100%,
     rgba(0, 212, 255, 1) 98%
   );
+}
 
+/* Logga in */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50%;
+}
+
+.login-container input {
+  width: 85%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  border: 1px white solid;
+  color: color;
+  border-radius: 5px;
+  font-family: "Chakra Petch", sans-serif;
+  padding: 15px;
+}
+
+.login-container button {
+  margin-top: 5%;
+  font-size: 20px;
+  color: white;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 10px;
+  border: white solid 1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
 }
 
 /* Log vy */
@@ -24,7 +54,7 @@ html body {
   align-items: center;
 }
 
-.log-heading {
+.log-container .log-heading {
   font-family: "Chakra Petch", sans-serif;
   font-size: 1.3rem;
   color: white;
@@ -65,20 +95,20 @@ html body {
 }
 
 /* Sök efter participant komponent */
-.advanced-search-title{
+.advanced-search-title {
   font-size: 0.8rem;
-  color:rgb(231, 231, 231);
+  color: rgb(231, 231, 231);
   border: rgb(231, 231, 231) solid 1px;
-  padding:5px;
+  padding: 5px;
   cursor: pointer;
 }
 
-.advanced-search-container{
+.advanced-search-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width:100%;
+  width: 100%;
 }
 
 .search-participant-container {
@@ -274,7 +304,7 @@ html body {
 }
 
 .profile-image-container {
-  min-height:45vh;
+  min-height: 45vh;
 }
 
 .css-h93ljk-MuiTypography-root {
@@ -304,19 +334,19 @@ html body {
   text-align: center;
 }
 
-.btns-for-logs{
-  display:flex;
+.btns-for-logs {
+  display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.btns-for-logs button{
+.btns-for-logs button {
   border: 1px solid white;
   font-family: "Chakra Petch", sans-serif;
-  background-color:transparent;
-  color:white;
-  padding:10px;
-  margin:5px;
+  background-color: transparent;
+  color: white;
+  padding: 10px;
+  margin: 5px;
   font-weight: 800;
 }
 
@@ -385,7 +415,7 @@ footer p a {
 }
 
 .arrow-icon-search {
-  color:green;
+  color: green;
 }
 
 .card-actions-element {
