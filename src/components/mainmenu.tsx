@@ -19,6 +19,8 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { Link } from "react-router-dom";
+import Registeruser from "./registeruser";
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 
 const drawerWidth = 240;
 
@@ -125,6 +127,7 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+
         <List>
           {["QR-Scanner", "Search"].map((text, index) => (
             <ListItem key={text} disablePadding>
@@ -150,6 +153,21 @@ export default function PersistentDrawerLeft() {
               )}
             </ListItem>
           ))}
+        </List>
+        <List>
+          <ListItem>
+            <Link to={"/registeruser"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AccessibilityNewIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Register User"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
         </List>
         <Divider />
         <List>
