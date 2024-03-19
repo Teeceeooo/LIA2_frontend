@@ -20,7 +20,7 @@ html body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50%;
+  margin-top: 40%;
 }
 
 .login-container input {
