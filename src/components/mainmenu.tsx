@@ -129,12 +129,15 @@ export default function PersistentDrawerLeft() {
           {["QR-Scanner", "Search"].map((text, index) => (
             <ListItem key={text} disablePadding>
               {index % 2 === 0 ? (
-                <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link
+                  to="/"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
                   <ListItemButton>
                     <ListItemIcon>
                       <InboxIcon />
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText primary={text} onClick={handleDrawerClose} />
                   </ListItemButton>
                 </Link>
               ) : (
@@ -142,7 +145,7 @@ export default function PersistentDrawerLeft() {
                   <ListItemIcon>
                     <MailIcon />
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={text} onClick={handleDrawerClose} />
                 </ListItemButton>
               )}
             </ListItem>
