@@ -9,7 +9,7 @@ import Createparticipant from "./components/createparticipant";
 import Logview from "./components/logview";
 import SearchParticipant from "./components/searchparticipant";
 import Login from "./components/login";
-
+import Registeruser from "./components/registeruser";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,18 +21,23 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        
         <PersistentDrawerLeft />
         <Routes>
-          {!isLoggedIn && <Route path="/" element={<Login onLogin={handleLogin} />} />}
+          {!isLoggedIn && (
+            <Route path="/" element={<Login onLogin={handleLogin} />} />
+          )}
           {isLoggedIn && (
             <>
               <Route path="/" element={<QrScanner />} />
               <Route path="/participant/:id" element={<Participant />} />
-              <Route path="/createparticipant/:id" element={<Createparticipant />} />
+              <Route
+                path="/createparticipant/:id"
+                element={<Createparticipant />}
+              />
               <Route path="/edituser" element={<Createparticipant />} />
               <Route path="/logs/:id" element={<Logview />} />
               <Route path="/searchuser" element={<SearchParticipant />} />
+              <Route path="/registeruser" element={<Registeruser />} />
             </>
           )}
           {isLoggedIn && <Route path="/login" element={<Navigate to="/" />} />}
