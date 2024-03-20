@@ -1,12 +1,12 @@
 import { Button, TextField } from "@mui/material";
 import { registerUser } from "../api/userAPI";
 import { useState } from "react";
-import { CheckBox } from "@mui/icons-material";
 
 export default function Registeruser() {
   const [username, setUserName] = useState("");
   const [userpassword, setUserPassword] = useState("");
   const [isActivated, setIsActiviated] = useState(false);
+  const [nameOfUser, setNameOfUser] = useState("");
 
   return (
     <div className="register-user-container">
@@ -25,6 +25,13 @@ export default function Registeruser() {
         maxRows={1}
         onChange={(e) => setUserPassword(e.target.value)}
       />
+         <TextField
+        id="outlined-multiline-flexible"
+        label="Namn"
+        multiline
+        maxRows={1}
+        onChange={(e) => setNameOfUser(e.target.value)}
+      />
       <div>
         <input
           className="checkbox-reg"
@@ -41,7 +48,7 @@ export default function Registeruser() {
         variant="outlined"
         size="medium"
         onClick={() => {
-          registerUser(username, userpassword, isActivated);
+          registerUser(username, userpassword, isActivated, nameOfUser);
         }}
       >
         Registrera användare
