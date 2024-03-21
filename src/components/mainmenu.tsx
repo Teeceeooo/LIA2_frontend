@@ -21,6 +21,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { Link, useNavigate } from "react-router-dom";
 import Registeruser from "./registeruser";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 const drawerWidth = 240;
 
@@ -164,6 +165,36 @@ export default function PersistentDrawerLeft() {
                 </ListItemIcon>
                 <ListItemText
                   primary={"Register User"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem>
+            <Link to={"/editaccount"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AccessibilityNewIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Edit Moderators"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem>
+            <Link to={"/moderators"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Moderators"}
                   onClick={handleDrawerClose}
                 />
               </ListItemButton>

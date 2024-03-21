@@ -10,6 +10,8 @@ import Logview from "./components/logview";
 import SearchParticipant from "./components/searchparticipant";
 import Login from "./components/login";
 import Registeruser from "./components/registeruser";
+import Editaccount from "./components/editaccount";
+import Moderators from "./components/moderators";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +40,9 @@ function App() {
               <Route path="/logs/:id" element={<Logview />} />
               <Route path="/searchuser" element={<SearchParticipant />} />
               <Route path="/registeruser" element={<Registeruser />} />
+              <Route path="/edituser" element={<Registeruser />} />
+              <Route path="/editaccount" element={<Editaccount />} />
+              <Route path="/moderators" element={<Moderators />} />
             </>
           )}
           {isLoggedIn && <Route path="/login" element={<Navigate to="/" />} />}
