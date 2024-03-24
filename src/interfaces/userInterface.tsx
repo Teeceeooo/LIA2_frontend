@@ -1,15 +1,15 @@
 interface User {
-  id?: number,
+  id?: number;
   username: string;
   password: string;
   enabled: boolean;
-  name : string;
-  roles : [
+  name?: string;
+  roles?: [
     {
-      username: string,
-      authority: string
+      username: string;
+      authority: string;
     }
-  ]
+  ];
 }
 
 export default User;

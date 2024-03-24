@@ -8,23 +8,22 @@ import axios from "axios";
 import User from "../interfaces/userInterface";
 
 export default function Editaccount() {
-  const {state} = useLocation();
-    const { userNameToFetch } = state;
-    const userCredentials = sessionStorage.getItem("username");
-    const passwordCredentials = sessionStorage.getItem("password");
-    const [username, setUserName] = useState(userNameToFetch ? userNameToFetch : "");
-    const [userpassword, setUserPassword] = useState("");
-    const [isActivated, setIsActiviated] = useState(userNameToFetch.isActivated ? userNameToFetch.isActivated : false);
-    const [nameOfUser, setNameOfUser] = useState<string | "">("");
-    const [user, setUser] = useState<User | null>(null);
-    
-    
-    const baseURL = `${getConfig().baseURL}`;
+  const { state } = useLocation();
+  const { userNameToFetch } = state;
+  const userCredentials = sessionStorage.getItem("username");
+  const passwordCredentials = sessionStorage.getItem("password");
+  // const [username, setUserName] = useState(userNameToFetch ? userNameToFetch : "");
+  const [userpassword, setUserPassword] = useState("");
+  const [isActivated, setIsActiviated] = useState(
+    userNameToFetch.isActivated ? userNameToFetch.isActivated : false
+  );
+  const [nameOfUser, setNameOfUser] = useState<string | "">("");
+  const [user, setUser] = useState<User | null>(null);
 
+  const baseURL = `${getConfig().baseURL}`;
 
-
-    useEffect(() => {
-      axios
+  useEffect(() => {
+    axios
       .get(`${baseURL}/api/v1/user/${userNameToFetch}`, {
         headers: {
           Authorization: `Basic ${btoa(`mkag:password`)}`,
@@ -32,7 +31,7 @@ export default function Editaccount() {
         },
       })
       .then((response) => {
-        setUser(response.data)          
+        setUser(response.data);
       })
       .catch((error) => {
         if (error.response) {
@@ -41,23 +40,11 @@ export default function Editaccount() {
           console.error(error);
         }
       });
-    },[])
+  }, []);
 
-    useEffect(() => {
-      setNameOfUser(user ? user.name : "");      
-    }, [user])
-
-    return (
-    <>   
-    <h1>Redigera Moderator</h1>
-    <TextField
-        value={username}
-        id="outlined-multiline-flexible"
-        label="Användarnamn"
-        multiline
-        maxRows={1}
-        onChange={(e) => setUserName(e.target.value)}
-      />
+  return (
+    <div className="edit-account-container">
+      <h1>Redigerar: {userNameToFetch}</h1>
       <TextField
         id="outlined-multiline-flexible"
         label="Lösenord"
@@ -65,6 +52,7 @@ export default function Editaccount() {
         maxRows={1}
         onChange={(e) => setUserPassword(e.target.value)}
       />
+      {/* Utkommenterar denna tills vi vet om name ska användas överhuvudtaget.
       <TextField
         value={nameOfUser}
         id="outlined-multiline-flexible"
@@ -72,8 +60,8 @@ export default function Editaccount() {
         multiline
         maxRows={1}
         onChange={(e) => setNameOfUser(e.target.value)}
-      />
-    <div>
+      />*/}
+      <div>
         <input
           className="checkbox-reg"
           type="checkbox"
@@ -89,12 +77,16 @@ export default function Editaccount() {
         variant="outlined"
         size="medium"
         onClick={() => {
-          editUserAccount(username, userpassword, isActivated, nameOfUser);
+          editUserAccount(
+            userNameToFetch,
+            userpassword,
+            isActivated,
+            nameOfUser
+          );
         }}
       >
         Redigera Moderator
       </Button>
-    </>
-
-    );
+    </div>
+  );
 }

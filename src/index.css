@@ -15,6 +15,16 @@ html body {
   );
 }
 
+/* Meny */
+
+.menu-item span {
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-family: "Chakra Petch", sans-serif;
+}
+
 /* Registrera användare */
 .register-user-container {
   display: flex;
@@ -41,12 +51,26 @@ html body {
   margin-bottom: 15px;
 }
 
+/* Redigera moderator konton */
+.edit-account-container {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  align-items: center;
+}
+
+.edit-account-container h1 {
+  color: white;
+  font-family: "Chakra Petch", sans-serif;
+  margin-bottom: 15px;
+}
+
 /* Logga in */
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40%;
+  margin-top: 10%;
 }
 
 .login-container input {
