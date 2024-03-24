@@ -16,11 +16,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { Link, useNavigate } from "react-router-dom";
-import Registeruser from "./registeruser";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import SearchIcon from "@mui/icons-material/Search";
+import QrCodeIcon from "@mui/icons-material/QrCode";
 
 const drawerWidth = 240;
 
@@ -101,7 +101,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            QR-Skanner
+            Subzero E-Games
           </Typography>
         </Toolbar>
       </AppBar>
@@ -128,32 +128,21 @@ export default function PersistentDrawerLeft() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-
         <List>
-          {["QR-Scanner", "Search"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              {index % 2 === 0 ? (
-                <Link
-                  to="/"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={text} onClick={handleDrawerClose} />
-                  </ListItemButton>
-                </Link>
-              ) : (
-                <ListItemButton>
-                  <ListItemIcon>
-                    <MailIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={text} onClick={handleDrawerClose} />
-                </ListItemButton>
-              )}
-            </ListItem>
-          ))}
+          <ListItem>
+            <Link to={"/"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <QrCodeIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className="menu-item"
+                  primary={"QR skanner"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
         </List>
         <List>
           <ListItem>
@@ -163,7 +152,40 @@ export default function PersistentDrawerLeft() {
                   <AccessibilityNewIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"Register User"}
+                  className="menu-item"
+                  primary={"Registrera Moderator"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem>
+            <Link to={"/searchuser"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <SearchIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className="menu-item"
+                  primary={"Sök deltagare"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem>
+            <Link to={"/moderators"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className="menu-item"
+                  primary={"Moderatorer"}
                   onClick={handleDrawerClose}
                 />
               </ListItemButton>
@@ -172,16 +194,20 @@ export default function PersistentDrawerLeft() {
         </List>
         <Divider />
         <List>
-          {["Logout"].map((text, index) => (
-            <ListItem key={text} disablePadding>
+          <ListItem>
+            <Link to={"/"}>
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <AdminPanelSettingsIcon />
                 </ListItemIcon>
-                <ListItemText primary={text}/>
+                <ListItemText
+                  className="menu-item"
+                  primary={"Logga ut"}
+                  onClick={handleDrawerClose}
+                />
               </ListItemButton>
-            </ListItem>
-          ))}
+            </Link>
+          </ListItem>
         </List>
       </Drawer>
       <Main open={open}>
