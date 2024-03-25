@@ -26,7 +26,9 @@ export default function Editaccount() {
     axios
       .get(`${baseURL}/api/v1/user/${userNameToFetch}`, {
         headers: {
-          Authorization: `Basic ${btoa(`mkag:password`)}`,
+          Authorization: `Basic ${btoa(
+            `${userCredentials}:${passwordCredentials}`
+          )}`,
           "Content-Type": "application/json",
         },
       })
