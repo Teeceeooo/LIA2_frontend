@@ -12,6 +12,7 @@ import Login from "./components/login";
 import Registeruser from "./components/registeruser";
 import Editaccount from "./components/editaccount";
 import Moderators from "./components/moderators";
+import Searchmoderator from "./components/searchmoderator";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,6 +44,7 @@ function App() {
               <Route path="/edituser" element={<Registeruser />} />
               <Route path="/editaccount" element={<Editaccount />} />
               <Route path="/moderators" element={<Moderators />} />
+              <Route path="/searchmoderators" element={<Searchmoderator />} />
             </>
           )}
           {isLoggedIn && <Route path="/login" element={<Navigate to="/" />} />}

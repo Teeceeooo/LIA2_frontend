@@ -178,6 +178,22 @@ export default function PersistentDrawerLeft() {
         </List>
         <List>
           <ListItem>
+            <Link to={"/searchmoderators"}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <SearchIcon />
+                </ListItemIcon>
+                <ListItemText
+                  className="menu-item"
+                  primary={"Sök Moderator"}
+                  onClick={handleDrawerClose}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        </List>
+        <List>
+          <ListItem>
             <Link to={"/moderators"}>
               <ListItemButton>
                 <ListItemIcon>
