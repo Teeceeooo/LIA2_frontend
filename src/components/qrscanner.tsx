@@ -8,6 +8,7 @@ export default function QrScanner() {
   let scanner: Html5QrcodeScanner | null = null;
   const navigate = useNavigate();
   const showParticipantURL = `${getConfig().baseURL}/api/v1/participants/findById/`;
+  const validateToken = `${getConfig().baseURL}/api/v1/token/validate`;
 
   useEffect(() => {
     if (!scanner) {
@@ -27,18 +28,23 @@ export default function QrScanner() {
 
     function success(id: string) {
       scanner?.clear();
-      const username = sessionStorage.getItem('username');
-      const password = sessionStorage.getItem('password');
-      // test console log för debugging. Ta bort vid deployment
-      if (!username || !password) {
-        console.error('Username or password not found in sessionStorage');
+      const token = sessionStorage.getItem("token");
+    
+      if (!token) {
+        console.error('Token not found in sessionStorage');
         return;
       }
-
-      axios
-        .get(showParticipantURL + id, {
+    
+      // Får 401 på denna pga det förväntas username och password. Får 200 i Postman när jag gör POST på endpointet, sätter in token som header och basic auth username och password
+      axios.post(validateToken, null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((response) => {
+        axios.get(showParticipantURL + id, {
           headers: {
-            Authorization: `Basic ${btoa(`${username}:${password}`)}`
+            Authorization: `Bearer ${token}`
           }
         })
         .then((response) => {
@@ -53,7 +59,12 @@ export default function QrScanner() {
         .catch((error) => {
           console.error("An error occurred while fetching participant data: ", error);
         });
+      })
+      .catch((error) => {
+        console.error("Token validation failed: ", error);
+      });
     }
+    
 
     function error(err: any) {
       //console.warn(err);
