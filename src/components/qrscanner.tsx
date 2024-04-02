@@ -38,13 +38,13 @@ export default function QrScanner() {
       // Får 401 på denna pga det förväntas username och password. Får 200 i Postman när jag gör POST på endpointet, sätter in token som header och basic auth username och password
       axios.post(validateToken, null, {
         headers: {
-          Authorization: `Bearer ${token}`
+          'token': token    
         }
       })
       .then((response) => {
         axios.get(showParticipantURL + id, {
           headers: {
-            Authorization: `Bearer ${token}`
+            'token': token    
           }
         })
         .then((response) => {
