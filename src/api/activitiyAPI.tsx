@@ -5,6 +5,7 @@ import Participant from "../interfaces/participantInterface";
 
 const username = sessionStorage.getItem('username');
 const password = sessionStorage.getItem('password');
+const token = sessionStorage.getItem("token");
 
 export async function checkInParticipant(currentUserId: string) {
   try {
@@ -21,7 +22,7 @@ export async function checkInParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })
@@ -49,7 +50,7 @@ export async function checkOutParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })
@@ -76,7 +77,7 @@ export async function leavingParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })
@@ -103,7 +104,7 @@ export async function returningParticipant(currentUserId: string) {
     await axios
       .post(postActivityURL, newActivity, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })

@@ -12,6 +12,8 @@ export default function Searchmoderator() {
   const baseURL = `${getConfig().baseURL}`;
   const username = sessionStorage.getItem("username");
   const password = sessionStorage.getItem("password");
+  const token = sessionStorage.getItem("token");
+  
   const navigate = useNavigate();
 
   async function navgiateToModerator(accountUserName: string) {
@@ -26,7 +28,7 @@ export default function Searchmoderator() {
     axios
       .post(`${baseURL}/api/v1/user/searchmoderator`, searchData, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })

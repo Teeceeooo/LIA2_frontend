@@ -14,6 +14,7 @@ export async function editUserAccount(
     const postUserURL = `${baseURL}/api/v1/user/edit`;
     const usernameLogin = sessionStorage.getItem("username");
     const passwordLogin = sessionStorage.getItem("password");
+    const token = sessionStorage.getItem("token");
 
     let newUser: User = {
       username: username,
@@ -25,7 +26,7 @@ export async function editUserAccount(
     await axios
       .put(postUserURL, newUser, {
         headers: {
-          Authorization: `Basic ${btoa(`${usernameLogin}:${passwordLogin}`)}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {

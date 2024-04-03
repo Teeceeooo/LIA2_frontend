@@ -25,14 +25,11 @@ function LoginForm({ onLogin }: LoginFormProps) {
         },
       });
 
-      // testade här med const { accessToken } = response.data för att kunna använda headers vid ett API anropp
       if (response.data) {
-        const { id, roles } = response.data;
+        const { token } = response.data;
+        console.log("Received token:", token);
 
-        sessionStorage.setItem("username", username);
-        sessionStorage.setItem("password", password);
-        sessionStorage.setItem("id", id);
-        sessionStorage.setItem("role", roles);
+        sessionStorage.setItem("token", token);
 
         onLogin();
 

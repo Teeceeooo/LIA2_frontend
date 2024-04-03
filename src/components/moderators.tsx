@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function Moderators() {
   const username = sessionStorage.getItem("username");
   const password = sessionStorage.getItem("password");
+  const token = sessionStorage.getItem("token");
   const baseURL = `${getConfig().baseURL}`;
   const [pageSize, setPageSize] = useState(3);
   const [page, setPage] = useState(0);
@@ -36,7 +37,7 @@ export default function Moderators() {
     axios
       .get(getModerators, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })

@@ -8,6 +8,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const username = sessionStorage.getItem('username');
 const password = sessionStorage.getItem('password');
+const token = sessionStorage.getItem("token");
 
 export default function Logview() {
   const [logData, setLogData] = useState<Activity[]>([]);
@@ -22,7 +23,7 @@ export default function Logview() {
     axios
       .get(findLogs, {
         headers: { 
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         }},)
       .then((response) => {

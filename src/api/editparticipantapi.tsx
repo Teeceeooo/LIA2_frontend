@@ -18,13 +18,14 @@ export default async function editParticipant(
 
   const uploadURL = `${baseURL}/api/v1/images/upload`;
   const editParticipantURL = `${baseURL}/api/v1/participants/edit`;
+  const token = sessionStorage.getItem("token");
 
   try {
     if (image && isImageChanged) {
       formData.append("file", image);
       const response = await axios.post(uploadURL, formData, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
@@ -34,7 +35,7 @@ export default async function editParticipant(
 
     await axios.put(editParticipantURL, editedParticipant, {
       headers: {
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        Authorization: `Bearer ${token}`
       },
     });
   } catch (error) {

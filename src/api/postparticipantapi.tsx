@@ -16,6 +16,7 @@ export default function addParticipant(
 
   const username = sessionStorage.getItem('username');
   const password = sessionStorage.getItem('password');
+  const token = sessionStorage.getItem("token");
 
   const addURL = `${baseURL}/api/v1/participants/add`;
   const uploadURL = `${baseURL}/api/v1/images/upload`;
@@ -43,7 +44,7 @@ export default function addParticipant(
     axios
       .post(uploadURL, formData, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       })
@@ -64,7 +65,7 @@ export default function addParticipant(
         axios
           .post(addURL, participantData, {
             headers: {
-              Authorization: `Basic ${btoa(`${username}:${password}`)}`
+              Authorization: `Bearer ${token}`
             },
           })
           .then((response) => {
@@ -81,7 +82,7 @@ export default function addParticipant(
     axios
       .post(addURL, participantData, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`
+          Authorization: `Bearer ${token}`
         },
       })
       .catch((error) => {
