@@ -21,14 +21,13 @@ export default function Editaccount() {
   const [user, setUser] = useState<User | null>(null);
 
   const baseURL = `${getConfig().baseURL}`;
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     axios
       .get(`${baseURL}/api/v1/user/${userNameToFetch}`, {
         headers: {
-          Authorization: `Basic ${btoa(
-            `${userCredentials}:${passwordCredentials}`
-          )}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })

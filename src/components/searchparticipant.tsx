@@ -17,6 +17,7 @@ export default function SearchParticipant() {
 
   const username = sessionStorage.getItem('username');
   const password = sessionStorage.getItem('password');
+  const token = sessionStorage.getItem("token");
   const searchApiURL = `${getConfig().baseURL}/api/v1/participants/searchusers`;
 
 
@@ -31,10 +32,12 @@ export default function SearchParticipant() {
         comment: comment || null,
       };
       axios
-        .post(
-          searchApiURL,
-          searchData
-        )
+      .post(searchApiURL, searchData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
         .then((response) => {
           console.log(response.data);
           setSearchResult(response.data);

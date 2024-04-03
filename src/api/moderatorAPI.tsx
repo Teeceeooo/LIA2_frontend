@@ -7,6 +7,8 @@ import userInterface from "../interfaces/userInterface";
 export default function fetchModerators() {
     const username = sessionStorage.getItem("username");
     const password = sessionStorage.getItem("password");
+    const token = sessionStorage.getItem("token");
+    
 
     const baseURL = `${getConfig().baseURL}`;
   
@@ -14,7 +16,7 @@ export default function fetchModerators() {
     axios
       .get(`${baseURL}/api/v1/user/getAll`, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`
         },
       })
       .then((response) => {

@@ -4,6 +4,7 @@ import User from "../interfaces/userInterface";
 
 const username = sessionStorage.getItem("username");
 const password = sessionStorage.getItem("password");
+const token = sessionStorage.getItem("token");
 
 export async function registerUser(
   name: string,
@@ -33,7 +34,7 @@ export async function registerUser(
     await axios
       .post(postUserURL, newUser, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       })

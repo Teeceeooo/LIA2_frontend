@@ -36,6 +36,7 @@ export default function Participant() {
 
   const showParticipantURL = `${baseURL}/api/v1/participants/`;
   const imgURL = `${baseURL}/api/v1/images/img/`;
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     getParticipant();
@@ -45,7 +46,7 @@ export default function Participant() {
     axios
       .get(showParticipantURL + idParam, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`
         },
       })
       .then((response) => {
@@ -57,7 +58,7 @@ export default function Participant() {
     axios
       .get(`${baseURL}/api/v1/activity/getLatest/${idParam}`, {
         headers: {
-          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+          Authorization: `Bearer ${token}`
         },
       })
       .then((response) => {
