@@ -43,6 +43,8 @@ export default function Editaccount() {
       });
   }, []);
 
+
+
   return (
     <div className="edit-account-container">
       <h1>Redigerar: {userNameToFetch}</h1>
@@ -53,15 +55,6 @@ export default function Editaccount() {
         maxRows={1}
         onChange={(e) => setUserPassword(e.target.value)}
       />
-      {/* Utkommenterar denna tills vi vet om name ska användas överhuvudtaget.
-      <TextField
-        value={nameOfUser}
-        id="outlined-multiline-flexible"
-        label="Namn"
-        multiline
-        maxRows={1}
-        onChange={(e) => setNameOfUser(e.target.value)}
-      />*/}
       <div>
         <input
           className="checkbox-reg"
