@@ -110,7 +110,8 @@ export default function Createparticipant() {
         type="file"
         name="avatar"
         className="image-button"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg;capture=camera"
+        capture="environment"
         onChange={handleImageUpload}
       />
       <h3 className="h3-default">Id: {currentUser ? currentUser.id : id}</h3>
