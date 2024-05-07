@@ -123,16 +123,16 @@ export default function Participant() {
         <CardMedia
           sx={{ height: 140 }}
           image={
-            user?.image.imageUrl
+            user?.image && user?.image.imageUrl
               ? imgURL + user?.image.imageUrl
-              : imgURL + "default-image.jpg"
-          }
+              : imgURL + "default.jpg"
+        }
           title="Profile picture"
           component="a"
           href={
             user?.image.imageUrl
               ? imgURL + user?.image.imageUrl
-              : imgURL + "default-image.jpg"
+              : imgURL + "default.jpg"
           }
           target="_blank"
           className="profile-image-container"

@@ -21,8 +21,14 @@ import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SearchIcon from "@mui/icons-material/Search";
 import QrCodeIcon from "@mui/icons-material/QrCode";
+import { useState } from "react";
+import CachedIcon from '@mui/icons-material/Cached';
+import axios from "axios";
+import { getConfig } from "../interfaces/configInterface";
 
 const drawerWidth = 240;
+
+
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
@@ -74,6 +80,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
+  const baseURL = `${getConfig().baseURL}`;
+  const token = sessionStorage.getItem("token");
+
+  // För räknarna incheckade / på plats
+  const [totalCheckedIn, setTotalCheckedIn] = useState(0);
+  const [atLocation, setAtLocation] = useState(0);
+
   const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -85,6 +98,53 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const logOut = () => {
+    setOpen(false);
+    sessionStorage.setItem("token", "");
+
+  };
+
+  async function totalParticipantsAtScene() {
+    await axios
+    .get(`${baseURL}/api/v1/participants/countParticipantsInBuilding`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      setAtLocation(response.data);
+      console.log("Antal på plats: " + response.data)
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log("Det gick inte utföra räkningen");
+      } else {
+        console.error(error);
+      }
+    });
+  }
+
+  async function totalParticipantsCheckedIn() {
+   await axios
+    .get(`${baseURL}/api/v1/participants/findNumberOfParticipants`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      setTotalCheckedIn(response.data);
+      console.log("Antal incheckade: " + response.data)
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log("Det gick inte utföra räkningen");
+      } else {
+        console.error(error);
+      }
+    });
+  }
+
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -211,7 +271,7 @@ export default function PersistentDrawerLeft() {
         <Divider />
         <List>
           <ListItem>
-            <Link to={"/"}>
+            <Link to={"/login"}>
               <ListItemButton>
                 <ListItemIcon>
                   <AdminPanelSettingsIcon />
@@ -219,12 +279,20 @@ export default function PersistentDrawerLeft() {
                 <ListItemText
                   className="menu-item"
                   primary={"Logga ut"}
-                  onClick={handleDrawerClose}
+                  onClick={logOut}
                 />
               </ListItemButton>
             </Link>
           </ListItem>
         </List>
+          <div className='participant-counter-container'>
+            <div className="counter-container">
+              <h6 className="heading-counter">På plats: {atLocation}</h6> < CachedIcon className="reload-counter-btn" onClick={totalParticipantsAtScene}/>
+            </div>
+            <div className="counter-container">
+              <h6 className="heading-counter">Totalt incheckade: {totalCheckedIn}</h6> < CachedIcon className="reload-counter-btn" onClick={totalParticipantsCheckedIn}/>
+            </div>
+          </div>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
