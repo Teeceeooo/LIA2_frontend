@@ -43,6 +43,8 @@ export default function Editaccount() {
       });
   }, []);
 
+
+
   return (
     <div className="edit-account-container">
       <h1>Redigerar: {userNameToFetch}</h1>
