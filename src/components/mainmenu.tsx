@@ -84,8 +84,8 @@ export default function PersistentDrawerLeft() {
   const token = sessionStorage.getItem("token");
 
   // För räknarna incheckade / på plats
-  const [totalCheckedIn, setTotalCheckedIn] = useState(0);
-  const [atLocation, setAtLocation] = useState(0);
+  const [totalCheckedIn, setTotalCheckedIn] = useState();
+  const [atLocation, setAtLocation] = useState();
 
   const navigate = useNavigate();
   const theme = useTheme();
