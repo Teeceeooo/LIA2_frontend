@@ -2,9 +2,7 @@ import axios from "axios";
 import { getConfig } from "../interfaces/configInterface";
 import User from "../interfaces/userInterface";
 
-const username = sessionStorage.getItem("username");
-const password = sessionStorage.getItem("password");
-const token = sessionStorage.getItem("token");
+
 
 export async function registerUser(
   name: string,
@@ -17,6 +15,7 @@ export async function registerUser(
     const config = await getConfig();
     const baseURL = config.baseURL;
     const postUserURL = `${baseURL}/api/v1/user/add`;
+    const token = sessionStorage.getItem("token");
 
     let newUser: User = {
       username: name,

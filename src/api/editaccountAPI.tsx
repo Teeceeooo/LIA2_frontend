@@ -12,8 +12,6 @@ export async function editUserAccount(
     const config = await getConfig();
     const baseURL = config.baseURL;
     const postUserURL = `${baseURL}/api/v1/user/edit`;
-    const usernameLogin = sessionStorage.getItem("username");
-    const passwordLogin = sessionStorage.getItem("password");
     const token = sessionStorage.getItem("token");
 
     let newUser: User = {

@@ -5,8 +5,6 @@ import userInterface from "../interfaces/userInterface";
 
 
 export default function fetchModerators() {
-    const username = sessionStorage.getItem("username");
-    const password = sessionStorage.getItem("password");
     const token = sessionStorage.getItem("token");
     
 
