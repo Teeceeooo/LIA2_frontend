@@ -10,8 +10,6 @@ export default function Searchmoderator() {
   const [name, setName] = useState("");
   const [allModerators, setAllModerators] = useState<User[]>([]);
   const baseURL = `${getConfig().baseURL}`;
-  const username = sessionStorage.getItem("username");
-  const password = sessionStorage.getItem("password");
   const token = sessionStorage.getItem("token");
   
   const navigate = useNavigate();

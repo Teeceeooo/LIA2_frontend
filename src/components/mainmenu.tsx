@@ -102,7 +102,7 @@ export default function PersistentDrawerLeft() {
   const logOut = () => {
     setOpen(false);
     sessionStorage.setItem("token", "");
-
+    window.location.reload();
   };
 
   async function totalParticipantsAtScene() {
