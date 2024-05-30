@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { Button, List, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Participant from "../interfaces/participantInterface";
 import { useNavigate } from "react-router-dom";
-import { config, getConfig } from "../interfaces/configInterface";
+import { getConfig } from "../interfaces/configInterface";
 
 
 export default function SearchParticipant() {
@@ -15,8 +14,6 @@ export default function SearchParticipant() {
   const [comment, setComment] = useState("");
   const [searchResult, setSearchResult] = useState<Participant[]>([]);
 
-  const username = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
   const token = sessionStorage.getItem("token");
   const searchApiURL = `${getConfig().baseURL}/api/v1/participants/searchusers`;
 

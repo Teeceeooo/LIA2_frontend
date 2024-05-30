@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 import Participant from "../interfaces/participantInterface";
 import { getConfig } from "../interfaces/configInterface";
 
@@ -9,13 +8,7 @@ export default async function editParticipant(
   isImageChanged: boolean
 ): Promise<void> {
   const baseURL = getConfig().baseURL;
-  const frontURL = getConfig().frontBaseURL;
-
-  const username = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
-
   const formData = new FormData();
-
   const uploadURL = `${baseURL}/api/v1/images/upload`;
   const editParticipantURL = `${baseURL}/api/v1/participants/edit`;
   const token = sessionStorage.getItem("token");

@@ -12,10 +12,6 @@ export default function addParticipant(
   qrid: string
 ) {
   const baseURL = getConfig().baseURL;
-  const frontURL = getConfig().frontBaseURL;
-
-  const username = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
   const token = sessionStorage.getItem("token");
 
   const addURL = `${baseURL}/api/v1/participants/add`;

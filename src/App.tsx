@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PersistentDrawerLeft from "./components/mainmenu";
 import QrScanner from "./components/qrscanner";
@@ -20,6 +20,13 @@ function App() {
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token != null && token.length > 0) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <BrowserRouter>
