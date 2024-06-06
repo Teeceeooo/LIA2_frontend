@@ -51,6 +51,7 @@ export default function Participant() {
       })
       .then((response) => {
         setUser(response.data);
+        checkCurrentParticipantStatus();
       });
   }
 
